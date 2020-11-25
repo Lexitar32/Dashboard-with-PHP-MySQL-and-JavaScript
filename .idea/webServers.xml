@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="0dc7fad4-f218-4789-9818-d2736185476c" name="9ijakids.partner-api" url="http://partners.9ijakids.com">
+        <fileTransfer rootFolder="/var/www/gameserver" accessType="SFTP" host="partners.9ijakids.com" port="22" sshConfigId="cbe6d470-721d-443c-8244-ef4658fb3ca7" sshConfig="9ijakids" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
