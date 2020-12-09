@@ -146,6 +146,7 @@
 		$i = 0;
 		while ($game = mysqli_fetch_array($query)) {
 			$local_games[$i]['CategoryName'] = $game['CategoryName'];
+            $local_games[$i]['Hierarchy'] = $game['ChildCategoryCode'];
 			$local_games[$i]['GameID'] = $game['GameID'];
 			$local_games[$i]['GameTitle'] = $game['GameTitle'];
 			$local_games[$i]['GameDescription'] = $game['GameDescription'];
