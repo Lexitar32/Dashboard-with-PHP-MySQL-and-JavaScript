@@ -75,6 +75,38 @@
                         $response = getCatalog($pid);
                         http_response_code(200);
 					break;
+					case "group":
+					    //$response = getCatalog($pid);
+                        $response = getGroup();
+                        http_response_code(200);
+					break;
+						case "level":
+					    $response = getLevel();
+                        http_response_code(200);
+					break;
+					case "subject":
+					    $response = getSubject();
+                        http_response_code(200);
+					break;
+					case "catalogfilter":
+                        $inputs['pid'] = $pid;
+						//if (isset($request['gameGroup']))
+						//{
+							 $inputs['gameGroup'] =  mysqli_real_escape_string($con,$request['Group']);
+						//	}
+						//if (isset($request['gameLevel']))
+						//{
+							$inputs['gameLevel'] = mysqli_real_escape_string($con, $request['Level']);
+						//	}
+                       // if (isset($request['gameSubject']))
+						//{
+							 $inputs['gameSubject'] = mysqli_real_escape_string($con, $request['Subject']);
+						//	}
+
+
+						$inputs['partnerContract'] =$partner['ContractType'];
+                        $response = groupByLevel($inputs);
+					break;
 					case "subscribe":
                         $inputs['pid'] = $pid;
                         $inputs['userPassport'] = mysqli_real_escape_string($con, $request['userPassport']);
@@ -146,7 +178,10 @@
 		$i = 0;
 		while ($game = mysqli_fetch_array($query)) {
 			$local_games[$i]['CategoryName'] = $game['CategoryName'];
-            $local_games[$i]['Hierarchy'] = $game['ChildCategoryCode'];
+            $local_games[$i]['Group'] = $game['GroupName'];
+			$local_games[$i]['Level'] = $game['LevelName'];
+			$local_games[$i]['Subject'] = $game['SubjectName'];
+			$local_games[$i]['Topic'] = $game['CategoryName'];
 			$local_games[$i]['GameID'] = $game['GameID'];
 			$local_games[$i]['GameTitle'] = $game['GameTitle'];
 			$local_games[$i]['GameDescription'] = $game['GameDescription'];
@@ -157,6 +192,55 @@
 		return $local_games;
 	}
 	
+		function getGroup() {
+	  $sql = "select groupName, groupDescription from groupcategory";
+      $query = mysqli_query($GLOBALS['con'], $sql);
+	  $i = 0;
+
+			while ($grp = mysqli_fetch_array($query)) {
+			$game_group[$i]['Group'] = $grp['groupName'];
+			$game_group[$i]['Description'] = $grp['groupDescription'];
+
+			++$i;
+		}
+			return $game_group;
+
+	 }
+
+		function getSubject() {
+	  $sql = "select subjectName, subjectDescription from Subject";
+      $query = mysqli_query($GLOBALS['con'], $sql);
+	  $i = 0;
+
+			while ($subj = mysqli_fetch_array($query)) {
+			$game_group[$i]['Subject'] = $subj['subjectName'];
+			$game_group[$i]['Description'] = $subj['subjectDescription'];
+
+			++$i;
+		}
+			return $game_group;
+
+	 }
+
+
+			function getLevel() {
+	  $sql = "select levelName, levelDescription from level";
+      $query = mysqli_query($GLOBALS['con'], $sql);
+	  $i = 0;
+
+			while ($lvl = mysqli_fetch_array($query)) {
+			$game_group[$i]['Level'] = $lvl['levelName'];
+			$game_group[$i]['Description'] = $lvl['levelDescription'];
+
+			++$i;
+		}
+
+
+			return $game_group;
+
+	 }
+
+
     function expandCategory($catId) {
         $sql = "select categoryId, categoryName, parentCategoryId from Category where categoryId = $catId union ".
             "select categoryId, categoryName, parentCategoryId ".
@@ -197,6 +281,208 @@
 		return $games;
     }
     
+
+	 function groupByLevel($inputsArray){
+		 $partnerIDRecord=$inputsArray[pid];
+		 $gamegroup=$inputsArray[gameGroup];
+
+		 $gameSubject=$inputsArray[gameSubject];
+		 $gameLevel=$inputsArray[gameLevel];
+		 $partnerContractType=$inputsArray['partnerContract']; //Partner contract
+
+
+		  // Get Type of Custom or Bundle
+		  //$query = mysqli_query($GLOBALS['con'], $sql);
+        $catIds = $gameIds = '';
+        $game = array();
+
+		$filtergame='';
+
+
+		 if ($partnerContractType =="Custom" )
+		     {
+					  $sql5 = "select categoryId, gameId from Bundle where partnerId = $partnerIDRecord";
+					  $sql2 = "select gameId from Bundle where partnerId = $partnerIDRecord";
+					  $con = $GLOBALS['con'];
+					if(!$con)
+						$con = mysqli_connect("localhost","rookietoosmart","lAunch0ut!","partnerdb");
+
+                    $query = mysqli_query($con, $sql5);
+					//$query = mysqli_query($GLOBALS['con'], $sql5);
+					$bundle = mysqli_fetch_array($query);
+					$gameId = $bundle['gameId'];
+					$gameIds .= ($gameIds !== '') ? ',' . $gameId : $gameId;
+
+
+					while($bundle = mysqli_fetch_array($query)) {
+						$gameId = $bundle['gameId'];
+                        $gameIds .= ($gameIds !== '') ? ',' . $gameId : $gameId;
+					}
+
+						$sqlgame1 ="SELECT Gm.GameID, Gm.GameTitle, Gm.GameDescription,  Cat.CategoryName as Topic, Cat.GroupName, Cat.LevelName, Cat.SubjectName " ;
+						$sqlgame2 ="FROM Game Gm join Category Cat on Gm.CategoryID = Cat.CategoryID where Gm.GameID in ($gameIds) " ;
+
+
+						if(!$inputsArray['gameGroup'] )
+						{
+						  	$sqlgroup3="";
+						}
+						else
+						{
+
+							 $sqlgroup3= " AND Cat.GroupName = '$gamegroup' ";
+							//UserPassport='$userID'
+						}
+						if(!$inputsArray['gameLevel'])
+						//if(!$inputsArray['gameLevel'] )
+						{
+						  	$sqlgroup4="";
+						}
+						else
+						{
+							$sqlgroup4= " AND Cat.LevelName = '$gameLevel' ";
+						}
+						if(!$inputsArray['gameSubject'] )
+						{
+						  	$sqlgroup5="";
+						}
+						else
+						{
+							$sqlgroup5= " AND Cat.SubjectName ='$gameSubject' ";
+						}
+
+					$filtergame .=$sqlgame1 . $sqlgame2 . $sqlgroup3 . $sqlgroup4 . $sqlgroup5 .";" ;
+			       //  $sqlgroup= 	$sqlgame1   ;                                             }
+
+			 //MOVE to function
+			  $query = mysqli_query($GLOBALS['con'], $filtergame);
+		      $i = 0;
+		while ($game = mysqli_fetch_array($query)) {
+
+				//$local_games[$i]['GameID'] = $game[GameID];
+
+				$local_games[$i]['GameTitle'] = $game['GameTitle'];
+				$local_games[$i]['GameDescription'] = $game['GameDescription'];
+				$local_games[$i]['Topic'] = $game['Topic'];
+			    $local_games[$i]['Group'] = $game['GroupName'];
+			    $local_games[$i]['Level'] = $game['LevelName'];
+			    $local_games[$i]['Subject'] = $game['SubjectName'];
+				$local_games[$i]['GameImage'] = 'https://partners.9ijakids.com/index.php/thumbnail?game='.$game['GameTitle'];
+
+			   ++$i;
+
+			//$local_games[$i]['ggg'] = $i;
+			//$local_games[$i]['GameTitle'] = $game['GameTitle'];
+		              }
+
+		//	$local_games =  $partnerIDRecord . " this is games contract  " . $partnerContractType;
+			//$filtergame .= $sql5 . $sqlgame1 . $sqlgame2
+			//return $filtergame;
+			//$local_games =$filtergame ;
+			//return $game;
+			if(!$local_games)
+			{
+			$local_games = "No results match your filter criteria";
+			    return ['GamesCategoryFilterSuccess' => false];
+			}
+			else
+			{
+		        return $local_games;
+			}
+			 }
+
+		 else{
+			        $sqlCat='';
+					$sql2 = "SELECT Bund.categoryId, Bund.gameId, Cat.CategoryName FROM Bundle Bund join Category Cat on Bund.CategoryID= Cat.CategoryID where partnerId = '$partnerIDRecord'";
+					//$sql2 = "select categoryId  from Bundle where partnerId = '$partnerIDRecord'";
+					//SELECT Bund.categoryId, Bund.gameId, Cat.CategoryName FROM partnerdb.Bundle Bund
+                    //join Category Cat on Bund.CategoryID= Cat.CategoryID
+
+					$sqlcat1 ="SELECT Cat2.CategoryID as GamesCatID, Gm.GameID, Gm.GameTitle, Gm.GameDescription, Cat2.CategoryName as Topic, Cat2.GroupName, Cat2.LevelName,";
+					$sqlcat2  ="Cat2.SubjectName FROM Bundle Bund join Category Cat on Bund.CategoryID= Cat.CategoryID";
+                    $sqlcat3=" join Category Cat2 on Cat2.GroupName= Cat.CategoryName join Game Gm on Gm.CategoryID = Cat2.CategoryID where partnerId = '$partnerIDRecord' ";
+
+							if(!$inputsArray['gameGroup'] )
+						{
+						  	$sqlgroup3="";
+						}
+						else
+						{
+
+							 $sqlgroup3= " AND Cat2.GroupName = '$gamegroup' ";
+							//UserPassport='$userID'
+						}
+						if(!$inputsArray['gameLevel'])
+						//if(!$inputsArray['gameLevel'] )
+						{
+						  	$sqlgroup4="";
+						}
+						else
+						{
+							$sqlgroup4= " AND Cat2.LevelName = '$gameLevel' ";
+						}
+						if(!$inputsArray['gameSubject'] )
+						{
+						  	$sqlgroup5="";
+						}
+						else
+						{
+							$sqlgroup5= " AND Cat2.SubjectName ='$gameSubject' ";
+						}
+
+
+
+                    $sqlCat  .= $sqlcat1 .$sqlcat2 .$sqlcat3 .$sqlgroup3 .$sqlgroup4 .$sqlgroup5;
+					// $sqlCat  .= $sqlcat1 .$sqlcat2 .$sqlcat3;
+
+
+					$query = mysqli_query($GLOBALS['con'], $sqlCat);
+					//$catIds = $catId = $catName = $catNames = '';
+					$i=0;
+                    $bundle= array();
+
+
+					while($bundle = mysqli_fetch_array($query)) {
+
+					 $local_games[$i]['GameID'] = $bundle['GameID'];
+					// $local_games[i]['num'] = $i . $catName ;
+					$local_games[$i]['GameTitle'] = $bundle['GameTitle'];
+					$local_games[$i]['GameDescription'] = $bundle['GameDescription'];
+					$local_games[$i]['Topic'] = $bundle['Topic'];
+					$local_games[$i]['Group'] =$bundle['GroupName'];
+					$local_games[$i]['Level'] = $bundle['LevelName'];
+					$local_games[$i]['Subject'] = $bundle['SubjectName'];
+					$local_games[$i]['GameImage'] = 'https://partners.9ijakids.com/index.php/thumbnail?game='.$bundle['GameTitle'];
+
+
+					 ++$i;
+					 // */
+					// }
+					}
+
+		if(!$local_games)
+			{
+			$local_games = "No results match your filter criteria";
+			    return ['GamesCategoryFilterSuccess' => false];
+			}
+			else
+			{
+		        return $local_games;
+			}
+		//return $local_games;
+		//return $filtergame ;
+
+
+
+
+		 }
+
+
+			return $local_games;
+			//return $bundle;
+
+    }
+
     //fn subscribeUser backup
 	/*function subscribeUser ($inputsArray) {
         if(!$inputsArray['expiryDate'])
@@ -244,7 +530,7 @@
 						} else return ['subscribeUserSuccess' => false];
         }
 	}
-	
+
 	function unsubscribeUser ($inputsArray) {
 		$sql = "update Subscription set Status='Inactive' where PartnerID=$inputsArray[pid] and UserPassport='$inputsArray[userPassport]'";
 		if ($query = mysqli_query($GLOBALS['con'], $sql)) {
