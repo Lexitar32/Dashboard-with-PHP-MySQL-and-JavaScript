@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin Dashboard</title>
+
+    <!-- font awesome link-->
+    <script src="https://kit.fontawesome.com/c4b75b0548.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for dashboard-->
+    <link href="css/admin.css" rel="stylesheet">
+
+    <!-- toastr css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css"
+        integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+        crossorigin="anonymous" />
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                     <a href="index.html">Dashboard</a>
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Admin</span>
+                                <i class="fas fa-angle-down"></i>
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <!-- <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a> -->
+                                <!-- <div class="dropdown-divider"></div> -->
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Tabs navs -->
+                    <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="ex3-tab-1" data-mdb-toggle="tab" href="#ex3-tabs-1"
+                                role="tab" aria-controls="ex3-tabs-1" aria-selected="true">Bundle Customers</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="ex3-tab-2" data-mdb-toggle="tab" href="#ex3-tabs-2" role="tab"
+                                aria-controls="ex3-tabs-2" aria-selected="false">Custom Customers</a>
+                        </li>
+                    </ul>
+                    <!-- Tabs navs -->
+
+                    <!-- Tabs content -->
+                    <div class="tab-content" id="ex2-content">
+                        <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel"
+                            aria-labelledby="ex3-tab-1">
+                            <!-- DataTales Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">All Bundle</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Partner ID</th>
+                                                    <th>Assigned Games</th>
+                                                    <!-- <th>Contact Name</th>
+                                                    <th>Contract Type</th>
+                                                    <th>Access Token</th>
+                                                    <th>Created Date</th>
+                                                    <th>Status</th> -->
+                                                    <!-- <th></th> -->
+                                                    <!-- <th></th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- tbody is being loaded from db -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel" aria-labelledby="ex3-tab-2">
+                            Tab 2 content
+                        </div>
+                    </div>
+                    <!-- Tabs content -->
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- DataTales Example -->
+    <!-- <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">All Bundle Users</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Partner ID</th> -->
+                            <!-- <th>Assigned Name</th> -->
+                            <!-- <th>Contact Name</th>
+                            <th>Contract Type</th>
+                            <th>Access Token</th>
+                            <th>Created Date</th>
+                            <th>Status</th> -->
+                            <!-- <th></th> -->
+                            <th></th>
+                        <!-- </tr>
+                    </thead>
+                    <tbody> -->
+                        <!-- tbody is being loaded from db -->
+                    <!-- </tbody>
+                </table>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- toastr js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            getAllPartners();
+        })
+        //function to get all bundle subscribers
+        // async function getAllPartners() {
+        //     try {
+        //         const response = await fetch('api.php/GetAllPartners', {
+        //             method: 'GET',
+        //             headers: {
+        //                 'Content-Type': 'application/json'
+        //             }
+        //         });
+        //         const data = await response.json();
+        //         console.log(data);
+        //         let result = data.data;
+        //         let databody = "";
+        //         // load table row into table
+        //         for (const partner of result) {
+        //             const partnerInfo = `<tr>
+        //             <td>${partner.PartnerID}</td>
+        //             <!--<td>${partner.BusinessName}</td>
+        //             <td>${partner.ContactName}</td>
+        //             <td>${partner.ContractType}</td>
+        //             <td>${partner.PartnerAccessToken}</td>
+        //             <td>${partner.CreatedDate}</td>
+        //             <td>${partner.Status}</td>-->
+        //             <td><button class="btn btn-primary btn-edit" data-toggle="modal" data-target="#Editpartnerinfo" onclick="Edit('${partner.BusinessName}', '${partner.ContactName}', '${partner.ContactName}', '${partner.Status}', '${partner.PartnerID}')">Edit</button></td>
+        //             <td><button class="btn btn-danger" id="cancel" onclick="deletePartner(${partner.PartnerID})">Delete</button></td>
+        //             </tr>`
+        //             databody += partnerInfo;
+        //         }
+        //         $('#dataTable > tbody').append(databody);
+        //         $('#dataTable').DataTable();
+        //         return result;
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
+    
+
+        //function to fetch all partners from db
+        async function getAllPartners() {
+            try {
+                const response = await fetch('api.php/GetBundleUsers', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                let result = data.data;
+                console.log(result);
+                const filterGame = result.filter(val => val.GameID == null)
+                console.log(filterGame)
+                let databody = "";
+                // load table row into table
+                for (const partner of filterGame) {
+                    const partnerInfo = `<tr>
+                    <td>${partner.PartnerID}</td>
+                    <td>${partner.CategoryName}</td>
+                    <!--<td>${partner.ContactName}</td>
+                    <td>${partner.ContractType}</td>
+                    <td>${partner.PartnerAccessToken}</td>
+                    <td>${partner.CreatedDate}</td>
+                    <td>${partner.Status}</td> -->
+                    <!--<td><button class="btn btn-primary btn-edit" data-toggle="modal" data-target="#Editpartnerinfo" onclick="Edit('${partner.CategoryName}')">Assign games</button></td> -->
+                    <!-- <td><button class="btn btn-danger" id="cancel" onclick="deletePartner(${partner.PartnerID})">Delete</button></td> -->
+                    </tr>`
+                    databody += partnerInfo;
+                }
+                $('#dataTable > tbody').append(databody);
+                $('#dataTable').DataTable();
+                return result;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
