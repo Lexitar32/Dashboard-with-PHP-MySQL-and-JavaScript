@@ -124,9 +124,7 @@ try {
             respond(200, array('success' => true, 'data' => $BundleCategory));
         } else
             respond(404, array('success' => false, 'error' => 'bundle games not found'));
-    } 
-    
-    else if (stripos($_SERVER['REQUEST_URI'], '/GetBundleUsers') !== false) {
+    } else if (stripos($_SERVER['REQUEST_URI'], '/GetBundleUsers') !== false) {
         $db = getDb();
         $sql = "SELECT b.PartnerID, b.GameID, c.* FROM Bundle As b LEFT JOIN Category As c ON b.CategoryID = c.CategoryID";
         $query = mysqli_query($db, $sql);
@@ -148,6 +146,27 @@ try {
             respond(200, array('success' => true, 'data' => $getBundle));
         } else
             respond(404, array('success' => false, 'error' => 'bundle users not found'));
+    } else if (stripos($_SERVER['REQUEST_URI'], '/GetCustomUsers') !== false) {
+        $db = getDb();
+        $sql = "SELECT b.PartnerID, b.CategoryID as TableID, c.* FROM Bundle As b LEFT JOIN Game As c ON b.GameID = c.GameID";
+        $query = mysqli_query($db, $sql);
+        $getBundle = [];
+        if (mysqli_num_rows($query) > 0) {
+            $gid = [];
+            $getBundlex = [];
+            while ($row = mysqli_fetch_assoc($query)) {
+                $gid[] = $row['PartnerID'];
+                $getBundlex[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
+                $getBundlex[$row['PartnerID']]['gameObject'][] = $row;
+            }
+            $gid = array_unique($gid);
+            $getBundle = [];
+            foreach ($gid as $key => $id) {
+                $getBundle[] = $getBundlex[$id];
+            }
+            respond(200, array('success' => true, 'data' => $getBundle));
+        } else
+            respond(404, array('success' => false, 'error' => 'Custom users not found'));
     } else
         respond(400, array('success' => false, 'error' => 'resource or endpoint not found'));
 } catch (Exception $e) {
