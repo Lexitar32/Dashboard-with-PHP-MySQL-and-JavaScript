@@ -25,6 +25,11 @@
     <!-- dataTable cdn -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 </head>
+<style>
+    .hide {
+        display: none;
+    }
+</style>
 
 <body id="page-top">
 
@@ -69,15 +74,15 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#home">Bundle Partners</a></li>
+                        <li class="active"><a data-toggle="tab" href="#home" class="active">Bundle Partners</a></li>
                         <li><a data-toggle="tab" href="#menu1">Custom Partners</a></li>
                     </ul>
 
                     <div class="tab-content">
                         <div id="home" class="tab-pane fade in active">
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Bundle Parnters</h6>
+                                <div class="card-header py-3 text-center">
+                                    <h4 class="m-0 font-weight-bold text-primary">Bundle Parnters</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -100,8 +105,8 @@
                         </div>
                         <div id="menu1" class="tab-pane fade">
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Custom Partners</h6>
+                                <div class="card-header py-3 text-center">
+                                    <h3 class="m-0 font-weight-bold text-primary">Custom Partners</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -178,9 +183,10 @@
                         let game = item.CategoryName == null ? '' : item.CategoryName
                         return game
                     }).join(', ')
+                    const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
-                    <td>${partner.PartnerID}</td>
-                    <td>${gameType}</td>
+                    <td class='${hideColumn}'>${partner.PartnerID}</td>
+                    <td class='${hideColumn}' >${gameType}</td>
                     <!--<td>${partner.ContactName}</td>
                     <td>${partner.ContractType}</td>
                     <td>${partner.PartnerAccessToken}</td>
@@ -219,9 +225,10 @@
                         let game = item.GameTitle == null ? '' : item.GameTitle
                         return game
                     }).join(', ')
+                    const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
-                    <td>${partner.PartnerID}</td>
-                    <td>${gameType}</td>
+                    <td class='${hideColumn}'>${partner.PartnerID}</td>
+                    <td class='${hideColumn}'>${gameType}</td>
                     <!--<td>${partner.ContactName}</td>
                     <td>${partner.ContractType}</td>
                     <td>${partner.PartnerAccessToken}</td>

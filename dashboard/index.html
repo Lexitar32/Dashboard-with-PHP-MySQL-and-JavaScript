@@ -16,20 +16,14 @@
     <!-- data tables css -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
     <!-- select2 styling -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
-        integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
-        crossorigin="anonymous" />
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for dashboard-->
     <link href="css/admin.css" rel="stylesheet">
 
     <!-- toastr css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css"
-        integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
-        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
 
 </head>
 <style>
@@ -133,22 +127,19 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Admin</span>
                                 <i class="fas fa-angle-down"></i>
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a> -->
                                 <!-- <div class="dropdown-divider"></div> -->
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
                                 </a>
                             </div>
                         </li>
@@ -164,8 +155,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a class="btn btn-primary float-right" href="#" data-toggle="modal"
-                            data-target="#addnewpartner">
+                        <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#addnewpartner">
                             Add new partner <i class="fas fa-plus"></i>
                         </a>
 
@@ -219,8 +209,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -238,8 +227,7 @@
         </div>
     </div>
     <!-- Delete Partner Confirmation Modal-->
-    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -250,8 +238,7 @@
                 </div>
                 <div class="modal-body mx-auto">
                     <button class="btn btn-secondary" id="cancel" type="button" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-danger" id="confirm" onclick="submitpartnerdetails()"
-                        type="submit">Confirm</button>
+                    <button class="btn btn-danger" id="confirm" onclick="submitpartnerdetails()" type="submit">Confirm</button>
                 </div>
             </div>
         </div>
@@ -269,11 +256,9 @@
                 <div class="modal-body">
                     <form>
                         <label for="Business-name">Business Name</label>
-                        <input type="text" class="form-control" id="businessName" placeholder="Enter your business name"
-                            required>
+                        <input type="text" class="form-control" id="businessName" placeholder="Enter your business name" required>
                         <label for="contact-name" class="pt-3">Contact Name</label>
-                        <input type="text" class="form-control" id="contactName" placeholder="Enter contact name"
-                            required>
+                        <input type="text" class="form-control" id="contactName" placeholder="Enter contact name" required>
                         <label for="Contract-type" class="pt-3">Contract Type</label>
                         <select class="custom-select" id="contract-type">
                             <option value="1" selected>Bundle</option>
@@ -293,8 +278,7 @@
 
                         <div class="pt-4 float-right">
                             <button class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button id="submit-partner" onclick="createPartner()"
-                                class="btn btn-primary">Create</button>
+                            <button id="submit-partner" onclick="createPartner()" class="btn btn-primary">Create</button>
 
                         </div>
                     </form>
@@ -304,8 +288,7 @@
         </div>
     </div>
     <!-- Edit partner information -->
-    <div class="modal fade" id="Editpartnerinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" id="myModal">
+    <div class="modal fade" id="Editpartnerinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -317,11 +300,9 @@
                 <div class="modal-body">
                     <form>
                         <label for="Business-name">Business Name</label>
-                        <input type="text" class="form-control" id="editedbusinessName"
-                            placeholder="Enter your business name" required>
+                        <input type="text" class="form-control" id="editedbusinessName" placeholder="Enter your business name" required>
                         <label for="contact-name" class="pt-3">Contact Name</label>
-                        <input type="text" class="form-control" id="editedcontactName" placeholder="Enter contact name"
-                            required>
+                        <input type="text" class="form-control" id="editedcontactName" placeholder="Enter contact name" required>
                         <label for="Contract-type" class="pt-3">Contract Type</label>
                         <select class="custom-select" id="editedcontract-type">
                             <option value="Bundle">Bundle</option>
@@ -334,8 +315,7 @@
                         </select>
                         <div class="pt-4 float-right">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            <button type="submit" id="submit-partner" class="btn btn-primary"
-                                onclick="updatePartnerinfo()">Update</button>
+                            <button type="submit" id="edit-partner" class="btn btn-primary" onclick="updatePartnerinfo()">Update</button>
                         </div>
                     </form>
                 </div>
@@ -348,20 +328,16 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- toastr js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- data tables Javascript -->
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <!-- Select2 Javascript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
-        integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             getAllPartners();
             getbundlegames();
             getcustomganes();
@@ -444,6 +420,7 @@
                 });
                 const data = await response.json();
                 let result = data.data;
+                console.log(result);
                 let databody = "";
                 // load table row into table
                 for (const partner of result) {
@@ -498,7 +475,7 @@
                 }).join()
 
                 const gameSelect = document.querySelector('#games')
-                //remove all options
+                    //remove all options
                 gameSelect.innerHTML = '';
                 //append data to option
                 gameSelect.insertAdjacentHTML("afterbegin", bundleType);
@@ -527,7 +504,7 @@
                 }).join()
 
                 const gameSelect = document.querySelector('#games')
-                //remove all options
+                    //remove all options
                 gameSelect.innerHTML = '';
                 //append data to option
                 gameSelect.insertAdjacentHTML("afterbegin", gameType);
@@ -540,22 +517,22 @@
 
         const contractType = document.querySelector('#contract-type')
         contractType.addEventListener('change', () => {
-            // debugger
-            if (contractType.value === '1') {
-                getbundlegames()
-            } else {
-                getcustomganes()
-            }
-        })
-        //function to edit partner info
+                // debugger
+                if (contractType.value === '1') {
+                    getbundlegames()
+                } else {
+                    getcustomganes()
+                }
+            })
+            //function to edit partner info
         function Edit(bname, cname, ctype, cstatus, id) {
             $("#Editpartnerinfo").modal('toggle')
             $('#editedbusinessName').val(bname);
             $('#editedcontactName').val(cname);
-            $('#editedcontract-type option').filter(function () {
+            $('#editedcontract-type option').filter(function() {
                 return $(this).val() === ctype
             }).prop('selected', true);
-            $('#editedstatus option').filter(function () {
+            $('#editedstatus option').filter(function() {
                 return $(this).val() === cstatus
             }).prop('selected', true);
             sessionStorage.setItem('partnerId', id);
@@ -660,32 +637,32 @@
                     assignedgames: $("#games").val()
                 }
                 console.log(req);
-                    let response = await fetch('api.php/createPartner', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(req)
+                let response = await fetch('api.php/createPartner', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(req)
 
-                    });
-                    let data = await response.json()
-                    if (data.success) {
-                        console.log("added successfully");
-                        toastr.success(
-                            'Partner succesfully added', {
-                                timeOut: 3000,
-                                fadeOut: 1000,
-                                onHidden: reload()
-                            }
-                        );
-                        // window.location.reload()
-                    } else {
-                        console.log("failed")
+                });
+                let data = await response.json()
+                if (data.success) {
+                    console.log("added successfully");
+                    toastr.success(
+                        'Partner succesfully added', {
+                            timeOut: 3000,
+                            fadeOut: 1000,
+                            onHidden: reload()
+                        }
+                    );
+                    // window.location.reload()
+                } else {
+                    console.log("failed")
 
-                        function errorToastr() {
-                            toastr.error('Failed to add partner');
-                        };
-                    }
+                    function errorToastr() {
+                        toastr.error('Failed to add partner');
+                    };
+                }
             } catch (error) {
                 console.log(error);
             }
