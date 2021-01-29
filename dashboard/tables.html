@@ -29,7 +29,7 @@
     .hide {
         display: none;
     }
-
+    
     .nav-tabs {
         margin: auto;
         max-width: 25%;
@@ -82,7 +82,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <ul class="nav nav-tabs id="myTab" role="tablist"">
+                    <ul class="nav nav-tabs id=" myTab " role="tablist "">
                         <li class="nav-item" role="presentation">
                             <a id="bundle-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" class="nav-link active btn btn-danger p-10 m-3">Bundle Partners</a>
                         </li>
@@ -101,7 +101,7 @@
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
-                                       
+
                                                 <tr>
                                                     <th>Partner ID</th>
                                                     <th>Assigned Games</th>
@@ -196,7 +196,7 @@
                     let gameType = filterGame.map((item) => {
                         let game = item.CategoryName == null ? '' : item.CategoryName
                         return game
-                    }).join(', ')
+                    }).join('<br>')
                     const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
                     <td class='${hideColumn}'>${partner.PartnerID}</td>
@@ -238,7 +238,7 @@
                     let gameType = filterGame.map((item) => {
                         let game = item.GameTitle == null ? '' : item.GameTitle
                         return game
-                    }).join(', ')
+                    }).join('<br>')
                     const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
                     <td class='${hideColumn}'>${partner.PartnerID}</td>
