@@ -182,7 +182,7 @@
                     let gameType = filterGame.map((item) => {
                         let game = item.CategoryName == null ? '' : item.CategoryName
                         return game
-                    }).join(', ')
+                    }).join('<br>')
                     const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
                     <td class='${hideColumn}'>${partner.PartnerID}</td>
