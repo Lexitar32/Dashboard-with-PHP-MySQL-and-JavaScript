@@ -224,7 +224,7 @@
                     let gameType = filterGame.map((item) => {
                         let game = item.GameTitle == null ? '' : item.GameTitle
                         return game
-                    }).join(', ')
+                    }).join('<br>')
                     const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
                     <td class='${hideColumn}'>${partner.PartnerID}</td>
