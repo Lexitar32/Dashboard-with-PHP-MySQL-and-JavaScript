@@ -63,6 +63,15 @@ try {
             respond(500, array('success' => false, 'message' => 'db error: ' . $db->error));
         respond(200, array('success' => true, 'message' => 'Partner successfully created'));
         
+    } else if (stripos($_SERVER['REQUEST_URI'], "/login") !== false) {
+        $Username = $request['username'];
+        $Password = $request['password'];
+        $adminUsername = '9ijakids';
+        $adminPassword = 'lAunch0ut!';
+        if ($Username == $adminUsername && $Password == $adminPassword) {
+            respond(200, array('success' => true, 'data' => 'Username && Password match'));
+        } else
+            respond(404, array('success' => false, 'error' => 'Incorrect Username or Password'));
     } else if (stripos($_SERVER['REQUEST_URI'], "/GetAllPartners") !== false) {
         $sql = "select * from Partner";
         $query = mysqli_query($db, $sql);
@@ -93,6 +102,12 @@ try {
             $sql = "DELETE FROM Partner WHERE PartnerID = '$PartnerID'";
             $db->query($sql);
         }
+        // $sql = "select PartnerID, GameID, CategoryID, ID from Bundle where PartnerID = '$PartnerID'";
+        // $query = mysqli_query($db, $sql);
+        // if (mysqli_num_rows($query) == 1) {
+        //     $sql = "DELETE FROM Bundle WHERE PartnerID = '$PartnerID'";
+        //     $db->query($sql);
+        // }
         if ($db->errno)
             respond(500, array('success' => false, 'message' => 'db error: ' . $db->error));
         respond(200, array('success' => true, 'message' => 'Partner succesfully deleted'));
@@ -126,19 +141,23 @@ try {
             respond(404, array('success' => false, 'error' => 'bundle games not found'));
     } else if (stripos($_SERVER['REQUEST_URI'], '/GetBundleUsers') !== false) {
         $db = getDb();
-        $sql = "SELECT b.PartnerID, b.GameID, c.* FROM Bundle As b LEFT JOIN Category As c ON b.CategoryID = c.CategoryID";
+        //$sql = "SELECT b.PartnerID, b.GameID, Partner.BusinessName, c.* FROM Bundle As b LEFT JOIN Category As c ON b.CategoryID = c.CategoryID join Partner on b.PartnerID = Partner.PartnerID";
+        $sql = "SELECT Bundle.PartnerID, Partner.BusinessName, Category.CategoryID, Category.CategoryName, Category.CategoryCode from Bundle join Category on Bundle.CategoryID = Category.CategoryID join Partner on Bundle.PartnerID = Partner.PartnerID";
         $query = mysqli_query($db, $sql);
         $getBundle = [];
         if (mysqli_num_rows($query) > 0) {
             $pid = [];
+            $bname = [];
             $getBundlex = [];
             while ($row = mysqli_fetch_assoc($query)) {
                 $pid[] = $row['PartnerID'];
                 $getBundlex[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
+                $getBundlex[$row['PartnerID']]['BusinessName'] =  $row['BusinessName'];
                 $getBundlex[$row['PartnerID']]['gameObject'][] = $row;
             }
 
             $pid = array_unique($pid);
+            $bname = array_unique($bname);
             $getBundle = [];
             foreach ($pid as $key => $id) {
                 $getBundle[] = $getBundlex[$id];
@@ -148,15 +167,18 @@ try {
             respond(404, array('success' => false, 'error' => 'bundle users not found'));
     } else if (stripos($_SERVER['REQUEST_URI'], '/GetCustomUsers') !== false) {
         $db = getDb();
-        $sql = "SELECT b.PartnerID, b.CategoryID as TableID, c.* FROM Bundle As b LEFT JOIN Game As c ON b.GameID = c.GameID";
+        //$sql = "SELECT b.PartnerID, b.CategoryID as TableID, c.* FROM Bundle As b LEFT JOIN Game As c ON b.GameID = c.GameID";
+        $sql = "SELECT Bundle.PartnerID, Bundle.GameID, Partner.BusinessName, Game.GameDescription, Game.GameTitle, Game.levelCode from Bundle join Game on Bundle.GameID = Game.GameID join Partner on Bundle.PartnerID = Partner.PartnerID";
         $query = mysqli_query($db, $sql);
         $getBundle = [];
         if (mysqli_num_rows($query) > 0) {
             $gid = [];
+            $bname = [];
             $getBundlex = [];
             while ($row = mysqli_fetch_assoc($query)) {
                 $gid[] = $row['PartnerID'];
                 $getBundlex[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
+                $getBundlex[$row['PartnerID']]['BusinessName'] =  $row['BusinessName'];
                 $getBundlex[$row['PartnerID']]['gameObject'][] = $row;
             }
             $gid = array_unique($gid);
