@@ -199,15 +199,26 @@
                     let filterGame = partner.gameObject.filter(val => val.CategoryID != null);
                     let gameType = filterGame.map((item) => {
                             let game = item.CategoryName == null ? '' : item.CategoryName
-                            return game
-                        }).join('<br>')
-                        // const hideColumn = gameType == '' ? 'hide' : ''
+                            let gameOptions = `<option>${game}</option> `
+                            return gameOptions
+                        }).join()
+                        // let gameOptions = gameType.map((item) => {
+                        //     let game =
+                        //         return game
+                        // }).join()
+
+                    // const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
                     <td >${partner.PartnerID}</td>
                     <td >${partner.BusinessName}</td>
                     <td>Bundle</td>
-                    <td>${gameType}</td>
-                    <!--<td>${partner.ContactName}</td>
+                    <td>
+                        <select>
+                       ${gameType}
+                       </select>
+                    </td>
+                    <!--<td>${gameType}</td>
+                    <td>${partner.ContactName}</td>
                     <td>${partner.PartnerAccessToken}</td>
                     <td>${partner.CreatedDate}</td>
                     <td>${partner.Status}</td> -->
@@ -242,15 +253,20 @@
                     let filterGame = partner.gameObject.filter(val => val.GameID != null);
                     let gameType = filterGame.map((item) => {
                         let game = item.GameTitle == null ? '' : item.GameTitle
-                        return game
-                    }).join('<br>')
+                        let gameOptions = `<option>${game}</option> `
+                        return gameOptions
+                    }).join()
                     console.log(Object.keys(gameType).length)
                         // const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
                     <td>${partner.PartnerID}</td>
                     <td>${partner.BusinessName}</td>
                     <td>Custom</td>
-                    <td>${gameType}</td>
+                    <td>
+                        <select>
+                       ${gameType}
+                       </select>
+                    </td>
                     <!--<td>${partner.ContactName}</td>
                     <td>${partner.ContractType}</td>
                     <td>${partner.PartnerAccessToken}</td>
@@ -271,5 +287,7 @@
     </script>
 
 </body>
+
+</html>
 
 </html>
