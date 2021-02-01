@@ -16,8 +16,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for dashboard-->
-    <!-- <link href="css/admin.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="css/admin.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 
     <!-- toastr css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
@@ -28,11 +28,6 @@
 <style>
     .hide {
         display: none;
-    }
-    
-    .nav-tabs {
-        margin: auto;
-        max-width: 25%;
     }
     
     .nav-tabs li a {
@@ -51,7 +46,9 @@
             <div id="content">
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <a href="index.html">Dashboard</a>
+                    <a class="btn btn-success mr-2" href="tables.html">Dashboard</a>
+                    <a class="btn btn-warning" href="./userdashboard.html">Users Dashboard</a>
+
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <div class="topbar-divider d-none d-sm-block"></div>
@@ -82,7 +79,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <ul class="nav nav-tabs id=" myTab " role="tablist "">
+                    <ul class="nav nav-tabs text-center" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a id="bundle-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" class="nav-link active btn btn-danger p-10 m-3">Bundle Partners</a>
                         </li>
@@ -104,9 +101,11 @@
 
                                                 <tr>
                                                     <th>Partner ID</th>
+                                                    <th>Business Name</th>
+                                                    <th>Contract Type</th>
+                                                    <!-- <th>No of Games</th> -->
                                                     <th>Assigned Games</th>
-                                                    <!-- <th>Contact Name</th>
-                                                    <th>Contract Type</th> -->
+                                                    <!-- <th>Contract Type</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -128,9 +127,11 @@
                                             <thead>
                                                 <tr>
                                                     <th>Partner ID</th>
+                                                    <th>Business Name</th>
+                                                    <th>Contract Type</th>
+                                                    <!-- <th>No of Games</th> -->
                                                     <th>Assigned Games</th>
-                                                    <!-- <th>Contact Name</th>
-                                                    <th>Contract Type</th> -->
+                                                    <!-- <th>Contract Type</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -165,10 +166,10 @@
     <!-- toastr js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
     <!-- Core plugin JavaScript-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 
     <script>
@@ -200,9 +201,10 @@
                     const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
                     <td class='${hideColumn}'>${partner.PartnerID}</td>
+                    <td class='${hideColumn}'>${partner.BusinessName}</td>
+                    <th class='${hideColumn}'>Bundle</th>
                     <td class='${hideColumn}' >${gameType}</td>
                     <!--<td>${partner.ContactName}</td>
-                    <td>${partner.ContractType}</td>
                     <td>${partner.PartnerAccessToken}</td>
                     <td>${partner.CreatedDate}</td>
                     <td>${partner.Status}</td> -->
@@ -239,10 +241,13 @@
                         let game = item.GameTitle == null ? '' : item.GameTitle
                         return game
                     }).join('<br>')
-                    const hideColumn = gameType == '' ? 'hide' : ''
+                    console.log(gameType.length)
+                        // const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
-                    <td class='${hideColumn}'>${partner.PartnerID}</td>
-                    <td class='${hideColumn}'>${gameType}</td>
+                    <td >${partner.PartnerID}</td>
+                    <td >${partner.BusinessName}</td>
+                    <th >Custom</th>
+                    <td >${gameType}</td>
                     <!--<td>${partner.ContactName}</td>
                     <td>${partner.ContractType}</td>
                     <td>${partner.PartnerAccessToken}</td>
