@@ -195,15 +195,15 @@
                 for (const partner of result) {
                     let filterGame = partner.gameObject.filter(val => val.CategoryID != null);
                     let gameType = filterGame.map((item) => {
-                        let game = item.CategoryName == null ? '' : item.CategoryName
-                        return game
-                    }).join('<br>')
-                    const hideColumn = gameType == '' ? 'hide' : ''
+                            let game = item.CategoryName == null ? '' : item.CategoryName
+                            return game
+                        }).join('<br>')
+                        // const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
-                    <td class='${hideColumn}'>${partner.PartnerID}</td>
-                    <td class='${hideColumn}'>${partner.BusinessName}</td>
-                    <th class='${hideColumn}'>Bundle</th>
-                    <td class='${hideColumn}' >${gameType}</td>
+                    <td >${partner.PartnerID}</td>
+                    <td >${partner.BusinessName}</td>
+                    <td>Bundle</td>
+                    <td>${gameType}</td>
                     <!--<td>${partner.ContactName}</td>
                     <td>${partner.PartnerAccessToken}</td>
                     <td>${partner.CreatedDate}</td>
@@ -241,13 +241,13 @@
                         let game = item.GameTitle == null ? '' : item.GameTitle
                         return game
                     }).join('<br>')
-                    console.log(gameType.length)
+                    console.log(Object.keys(gameType).length)
                         // const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
-                    <td >${partner.PartnerID}</td>
-                    <td >${partner.BusinessName}</td>
-                    <th >Custom</th>
-                    <td >${gameType}</td>
+                    <td>${partner.PartnerID}</td>
+                    <td>${partner.BusinessName}</td>
+                    <td>Custom</td>
+                    <td>${gameType}</td>
                     <!--<td>${partner.ContactName}</td>
                     <td>${partner.ContractType}</td>
                     <td>${partner.PartnerAccessToken}</td>

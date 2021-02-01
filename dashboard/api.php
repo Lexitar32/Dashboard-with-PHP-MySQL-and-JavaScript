@@ -168,7 +168,7 @@ try {
     } else if (stripos($_SERVER['REQUEST_URI'], '/GetCustomUsers') !== false) {
         $db = getDb();
         //$sql = "SELECT b.PartnerID, b.CategoryID as TableID, c.* FROM Bundle As b LEFT JOIN Game As c ON b.GameID = c.GameID";
-        $sql = "SELECT Bundle.PartnerID, Partner.BusinessName, Game.GameDescription, Game.GameTitle, Game.levelCode from Bundle join Game on Bundle.GameID = Game.GameID join Partner on Bundle.PartnerID = Partner.PartnerID";
+        $sql = "SELECT Bundle.PartnerID, Bundle.GameID, Partner.BusinessName, Game.GameDescription, Game.GameTitle, Game.levelCode from Bundle join Game on Bundle.GameID = Game.GameID join Partner on Bundle.PartnerID = Partner.PartnerID";
         $query = mysqli_query($db, $sql);
         $getBundle = [];
         if (mysqli_num_rows($query) > 0) {
