@@ -94,7 +94,83 @@ try {
             respond(200, array('success' => true, 'data' => $result));
         } else
             respond(404, array('success' => false, 'error' => 'User not found'));
-    } else if (stripos($_SERVER['REQUEST_URI'], '/UpdatePartnerinfo') !== false) {
+    } 
+    else if (stripos($_SERVER['REQUEST_URI'], '/GetPartnerSubscription') !== false) {
+        $db = getDb();
+        $sql = "SELECT Subscription.SubscriptionID, Subscription.UserPassport, Subscription.CreatedDate, Subscription.ExpiryDate, Subscription.Status, c.* FROM Subscription LEFT JOIN Partner as c ON Subscription.PartnerID = c.PartnerID";
+        $query = mysqli_query($db, $sql);
+        $getBundle = [];
+        if (mysqli_num_rows($query) > 0) {
+            $gid = [];
+            $bname = [];
+            $getBundlex = [];
+            while ($row = mysqli_fetch_assoc($query)) {
+                $gid[] = $row['PartnerID'];
+                $getBundlex[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
+                $getBundlex[$row['PartnerID']]['BusinessName'] =  $row['BusinessName'];
+                $getBundlex[$row['PartnerID']]['ContactName'] =  $row['ContactName'];
+                $getBundlex[$row['PartnerID']]['ContractType'] =  $row['ContractType'];
+                $getBundlex[$row['PartnerID']]['PartnerAccessToken'] =  $row['PartnerAccessToken'];
+                $getBundlex[$row['PartnerID']]['CreatedDate'] =  $row['CreatedDate'];
+                $getBundlex[$row['PartnerID']]['PartnerDetails'][] = $row;
+            }
+            $gid = array_unique($gid);
+            $getBundle = [];
+            foreach ($gid as $key => $id) {
+                $getBundle[] = $getBundlex[$id];
+            }
+            respond(200, array('success' => true, 'data' => $getBundle));
+        } else
+            respond(404, array('success' => false, 'error' => 'User Info not found'));
+    } else if (stripos($_SERVER['REQUEST_URI'], '/Subscription') !== false) {
+        $db = getDb();
+        $sql = "select * from Subscription";
+        $query = mysqli_query($db, $sql);
+        $Subscription = [];
+
+        if (mysqli_num_rows($query) > 0) {
+            $pid = [];
+            $getSubscription = [];
+            while ($row = mysqli_fetch_assoc($query)) {
+                $pid[] = $row['PartnerID'];
+                $getSubscription[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
+                $getSubscription[$row['PartnerID']]['Subscription'][] = $row;
+            }
+
+            $pid = array_unique($pid);
+            $Subscription = [];
+            foreach ($pid as $key => $id) {
+                $Subscription[] = $getSubscription[$id];
+            }
+            respond(200, array('success' => true, 'data' => $Subscription));
+        } else
+            respond(404, array('success' => false, 'error' => 'Subscription not found'));
+    }
+    else if (stripos($_SERVER['REQUEST_URI'], '/Accesslog') !== false) {
+        $db = getDb();
+        $sql = "select * from AccessLog";
+        $query = mysqli_query($db, $sql);
+        $AccessLog = [];
+
+        if (mysqli_num_rows($query) > 0) {
+            $pid = [];
+            $getLog = [];
+            while ($row = mysqli_fetch_assoc($query)) {
+                $pid[] = $row['SubscriptionID'];
+                $getLog[$row['SubscriptionID']]['SubscriptionID'] = $row['SubscriptionID'];
+                $getLog[$row['SubscriptionID']]['PartnerInfo'][] = $row;
+            }
+
+            $pid = array_unique($pid);
+            $AccessLog = [];
+            foreach ($pid as $key => $id) {
+                $AccessLog[] = $getLog[$id];
+            }
+            respond(200, array('success' => true, 'data' => $AccessLog));
+        } else
+            respond(404, array('success' => false, 'error' => 'AccessLog not found'));
+    }
+    else if (stripos($_SERVER['REQUEST_URI'], '/UpdatePartnerinfo') !== false) {
         $PartnerID = $request['partnerId'];
         $BusinessName = $request['businessName'];
         $ContactName = $request['contactName'];
