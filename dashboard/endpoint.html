@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin Dashboard</title>
+
+    <!-- font awesome link-->
+    <script src="https://kit.fontawesome.com/c4b75b0548.js" crossorigin="anonymous"></script>
+    <!-- data tables css -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+    <!-- select2 styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for dashboard-->
+    <link href="css/admin.css" rel="stylesheet">
+
+    <!-- toastr css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <a class="btn btn-success" href="tables.html">Tables</a>
+                    <a class="btn btn-warning" href="./userdashboard.html">Users Dashboard</a>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Admin</span>
+                                <i class="fas fa-angle-down"></i>
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <!-- <div class="dropdown-divider"></div> -->
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <a class="btn btn-primary float-right mb-3" href="#" data-toggle="modal" data-target="#Editpartnerinfo4">
+                        Click to Select an action <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+    </div>
+    <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h3 class="m-0 font-weight-bold text-primary text-center">Check Partners Endpoints</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Partner ID</th>
+                            <th>Business Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- tbody is being loaded from db -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit partner information -->
+    <div class="modal fade" id="Editpartnerinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title create-modal-title">Select an endpoint to continue</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="viewCatalog()">View Catalog</button>
+                    </div>
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="filterCatalog()">Filter Catalog by Subject/Level and or Group</button>
+                    </div>
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="viewList()">View List of Subjects</button>
+                    </div>
+                    <!-- <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="subscribeUser()">Subscribe a User</button>
+                    </div>
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="unsubscribeUser()">Unsubscribe a User</button>
+                    </div>
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="playGame()">Play a game</button>
+                    </div> -->
+                    <div class="pt-3 float-right">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <!-- <button type="submit" id="edit-partner" class="btn btn-primary" onclick="updatePartnerinfo()">Update</button> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="Editpartnerinfo2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title2 create-modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <a target="blank" id="endpoint-link"></a>
+                    <div class="pt-5 float-right">
+                        <button type="button" onclick="cancelBtn()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="Editpartnerinfo3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title3 create-modal-title">Choose a Category to Generate url</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <p><button onclick="group()" class="btn btn-outline-primary">Subject</button></p>
+                        <p><button onclick="Level()" class="btn btn-outline-warning">Level</button></p>
+                        <p><button onclick="subject()" class="btn btn-outline-dark">Group</button></p>
+                        <p><button onclick="subjectGroup()" class="btn btn-outline-light">Subject & Group</button></p>
+                        <p><button onclick="subjectLevel()" class="btn btn-outline-success">Subject & Level</button></p>
+                        <p><button onclick="GroupLevel()" class="btn btn-outline-info">Group & Level</button></p>
+                        <p><button onclick="subjectGroupLevel()" class="btn btn-outline-secondary">Subject & Group & Level </button></p>
+                    </div>
+
+                    <div class="pt-5 float-right">
+                        <button type="button" onclick="cancelBtn()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <!-- <button type="submit" id="edit-partner" class="btn btn-primary" onclick="updatePartnerinfo()">Update</button> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="Editpartnerinfo4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title4 create-modal-title">Select an action</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="subscribeUser()">Subscribe a User</button>
+                    </div>
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="unsubscribeUser()">Unsubscribe a User</button>
+                    </div>
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="playGame()">Play a game</button>
+                    </div>
+                    <div class="pt-5 float-right">
+                        <button type="button" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="Editpartnerinfo5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title5 create-modal-title">Enter User Details to Generate Link</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label>Enter UserPassport</label><span class="text-danger"> *</span>
+                        <input type="text" name="userpassport" id="userpassport" class="form-control" placeholder="Enter email address or phone number">
+                        <p class="userpassport-error text-danger d-none">please enter email or phone number</p>
+                    </div>
+
+                    <div class="pt-3">
+                        <label>Enter Expiry Date (Optional)</label>
+                        <input type="number" name="expirydate" id="expirydate" class="form-control" placeholder="01-01-2021">
+                    </div>
+                    <div class="pt-5 float-right">
+                        <button type="button" onclick="cancelBtn2()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="button" onclick="next()" id="generate" class="btn btn-primary generate">Generate</button>
+                        <button type="button" onclick="next2()" id="generate2" class="btn btn-primary d-none generatebtn2">Generate</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="Editpartnerinfo7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title5 create-modal-title">Enter User Details to Generate Link</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label>Enter UserPassport</label><span class="text-danger"> *</span>
+                        <input type="text" id="userpassport2" class="form-control" placeholder="Enter email address or phone number">
+                        <p class="text-danger error-class d-none">Please enter a valid email or phone number</p>
+                    </div>
+
+                    <div class="pt-3">
+                        <label>Enter GameID</label><span class="text-danger"> *</span>
+                        <input type="number" id="gameid" class="form-control" placeholder="Enter GameID eg 13">
+                        <p class="text-danger error-class2 d-none">Please enter an id</p>
+                    </div>
+                    <div class="pt-5 float-right">
+                        <button type="button" onclick="cancelBtn2()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="button" onclick="generateGameID()" id="generate" class="btn btn-primary">Generate</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="Editpartnerinfo6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title6 create-modal-title">Click link below to test endpoint</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <a target="blank" id="endpoint-link2"></a>
+                    <div class="pt-5 float-right">
+                        <button type="button" onclick="cancelBtn2()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- toastr js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- data tables Javascript -->
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <!-- Select2 Javascript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            getAllPartners();
+            $('#games').select2({
+                dropdownParent: $('#myModal')
+            });
+        })
+
+        //function to fetch all partners from db
+        async function getAllPartners() {
+            try {
+                const response = await fetch('api.php/GetPartnerSubscription', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                let result = data.data;
+                console.log(result);
+                let databody = "";
+                // load table row into table
+                for (const partner of result) {
+                    const partnerInfo = `<tr>
+                    <td>${partner.PartnerID}</td>
+                    <td>${partner.BusinessName}</td>
+                    <td><button class="btn btn-primary btn-edit" data-toggle="modal" data-target="#Editpartnerinfo" onclick="Select('${partner.PartnerID}', '${partner.PartnerAccessToken}', '${partner.UserPassport}', '${partner.ExpiryDate}')">Select</button></td>
+                    </tr>`
+                    databody += partnerInfo;
+                }
+                $('#dataTable > tbody').append(databody);
+                $('#dataTable').DataTable();
+                return result;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        function Select(pid, ptoken, usp, ed) {
+            let partnerID = pid,
+                token = ptoken,
+                userpass = usp,
+                expDate = ed,
+                partnerArr = [partnerID, token, usp, ed],
+                array = sessionStorage.setItem('partnerinfo', JSON.stringify(partnerArr));
+        }
+
+        function link() {
+            $(".modal-title2").append("Click link below to test endpoint");
+            $("#Editpartnerinfo2").modal();
+        }
+
+        let url = `https://partners.9ijakids.com/index.php?partnerId=`,
+            urlbody = `&accessToken=`;
+
+        //generate url for Partner
+        function viewCatalog() {
+            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                partnerid = storedItem[0],
+                accessToken = storedItem[1],
+                urlEnd = `&action=catalog`,
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
+            console.log(fullUrl);
+            $("#Editpartnerinfo2").modal();
+            $("#Editpartnerinfo").modal().hide();
+            $("#endpoint-link").attr("href", fullUrl)
+            $('#endpoint-link').append(fullUrl);
+            link();
+        }
+
+        function cancelBtn() {
+            $("#endpoint-link").attr("href", '')
+            $('#endpoint-link').empty().append();
+            $(".modal-title2").empty().append();
+            $("#Editpartnerinfo").modal().show();
+        }
+
+        function cancelBtn2() {
+            $("#endpoint-link2").attr("href", '')
+            $('#endpoint-link2').empty().append();
+            $(".modal-title2").empty().append();
+            $("#Editpartnerinfo4").modal().show();
+        }
+
+        function filterCatalog() {
+            $("#Editpartnerinfo3").modal().show();
+            $("#Editpartnerinfo").modal().hide();
+        }
+
+        function subject() {
+            $("#Editpartnerinfo3").modal().hide();
+            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                partnerid = storedItem[0],
+                accessToken = storedItem[1],
+                urlEnd = `&action=group`,
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
+            $("#endpoint-link").attr("href", fullUrl)
+            $('#endpoint-link').append(fullUrl);
+            link()
+        }
+
+        function Level() {
+            $("#Editpartnerinfo3").modal().hide();
+            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                partnerid = storedItem[0],
+                accessToken = storedItem[1],
+                urlEnd = `&action=level`,
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
+            $("#endpoint-link").attr("href", fullUrl)
+            $('#endpoint-link').append(fullUrl);
+            link()
+        }
+
+        function group() {
+            $("#Editpartnerinfo3").modal().hide();
+            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                partnerid = storedItem[0],
+                accessToken = storedItem[1],
+                urlEnd = `&action=subject`,
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
+            $("#endpoint-link").attr("href", fullUrl)
+            $('#endpoint-link').append(fullUrl);
+            link()
+        }
+
+        function inputCheck() {
+            if ($('#userpassport').val() == "") {
+                $('.userpassport-error').removeClass("d-none")
+            } else {}
+        }
+
+        function subscribeUser() {
+            $(".generatebtn2").addClass('d-none')
+            $(".generate").removeClass('d-none')
+            $("#Editpartnerinfo4").modal().hide();
+            $("#Editpartnerinfo5").modal().show();
+        }
+
+        function next() {
+            $("#Editpartnerinfo5").modal().hide();
+            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                partnerid = storedItem[0],
+                accessToken = storedItem[1],
+                UserPassport = $('#userpassport').val(),
+                expiryDateEntered = $('#expirydate').val(),
+                // expiryDate = storedItem[3],
+                // d = expiryDate,
+                // date = d.split(' ')[0],
+                urlEnd = `&action=subscribe`,
+                urlpass = `&userPassport=`,
+                // urldate = `&expiryDate=`,
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urlEnd);
+            $("#endpoint-link2").attr("href", fullUrl);
+            $('#endpoint-link2').append(fullUrl);
+            console.log(fullUrl);
+            $("#Editpartnerinfo6").modal().show();
+        }
+
+        function next2() {
+            $("#Editpartnerinfo5").modal().hide();
+            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                partnerid = storedItem[0],
+                accessToken = storedItem[1],
+                UserPassport = $('#userpassport').val(),
+                urlEnd = `&action=unsubscribe`,
+                urlpass = `&userPassport=`,
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urlEnd);
+            $("#endpoint-link2").attr("href", fullUrl);
+            $('#endpoint-link2').append(fullUrl);
+            console.log(fullUrl);
+            $("#Editpartnerinfo6").modal().show();
+        }
+
+        function unsubscribeUser() {
+            $(".generatebtn2").removeClass('d-none')
+            $(".generate").addClass('d-none')
+            $("#Editpartnerinfo4").modal().hide();
+            $("#Editpartnerinfo5").modal().show();
+        }
+
+        function playGame() {
+            $("#Editpartnerinfo4").modal().hide();
+            $("#Editpartnerinfo7").modal().show();
+        }
+
+        function subjectGroup() {
+
+        }
+
+        function generateGameID() {
+            if ($('#userpassport2').val() == "" && $('#gameid').val() == "") {
+                $('.error-class').removeClass("d-none")
+                $('.error-class2').removeClass("d-none")
+            } else {
+                $("#Editpartnerinfo7").modal().hide();
+                let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                    url = `https://partners.9ijakids.com/index.php/play?partnerId=`,
+                    partnerid = storedItem[0],
+                    UserPassport = $('#userpassport2').val(),
+                    // and = `&`,
+                    urlpass = `&userPassport=`,
+                    accessToken = storedItem[1],
+                    urlEnd = `&action=play&`,
+                    urlend2 = ` gameID=`,
+                    gameId = $('#gameid').val()
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urlEnd, urlend2, gameId);
+                $("#endpoint-link2").attr("href", fullUrl);
+                $('#endpoint-link2').append(fullUrl);
+                console.log(fullUrl);
+                $("#Editpartnerinfo6").modal().show();
+            }
+        }
+        // $('body').removeClass('modal-open');
+        // $('.modal-backdrop').remove();
+    </script>
+</body>
+
+</html>
+
+</html>
