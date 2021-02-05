@@ -254,13 +254,14 @@
                         return gameOptions
                     }).join()
                     console.log(Object.keys(gameType).length)
-                        // const hideColumn = gameType == '' ? 'hide' : ''
+                    let name = partner.gameObject.filter(val => val.GameID != null);
+                    // const hideColumn = gameType == '' ? 'hide' : ''
                     const partnerInfo = `<tr>
                     <td>${partner.PartnerID}</td>
                     <td>${partner.BusinessName}</td>
                     <td>Custom</td>
                     <td>
-                        <select>
+                        <select class="form-control">
                        ${gameType}
                        </select>
                     </td>
