@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>User Management Dashboard</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="./css/user1.css">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Partner-Users</h3>
+                <strong>PU</strong>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i>
+                        View Summary
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="./user1.html">General Summary</a>
+                        </li>
+                        <li>
+                            <a href="./user2.html">User Summary</a>
+                        </li>
+                        <li>
+                            <a href="./user3.html">Detailed Breakdown</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="./user4.html">
+                        <i class="fas fa-user-plus"></i>
+                        Subscribe User
+                    </a>
+                    <!-- <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-copy"></i>
+                        Pages
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul> -->
+                </li>
+                <!-- <li>
+                    <a href="#">
+                        <i class="fas fa-image"></i>
+                        Portfolio
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        FAQ
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-paper-plane"></i>
+                        Contact
+                    </a>
+                </li> -->
+            </ul>
+
+            <!-- <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+                </li>
+                <li>
+                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+                </li>
+            </ul> -->
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Side-Toggle</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                        </ul>
+                    </div> -->
+                </div>
+            </nav>
+
+            <div class="summary-box">
+                <h3 class="page-header"><i class="fas fa-chart-line"></i> Summary</h3>
+                <div class="box-1">
+                    <p id="total-users" class="box-1-no"></p>
+                    <p class="box-1-det">Total no of users</p>
+                </div>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="summary-box-1">
+                <h3 class="page-header">New Subscriptions</h3>
+                <div class="general-box">
+                    <div class="box-2">
+                        <p class="box-2-no"></p>
+                        <p class="box-2-det">Today</p>
+                    </div>
+                    <div class="box-2">
+                        <p class="box-2-no"></p>
+                        <p class="box-2-det">This week</p>
+                    </div>
+                    <div class="box-2">
+                        <p class="box-2-no"></p>
+                        <p class="box-2-det">This month</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="summary-box-1">
+                <h3 class="page-header">Active Users</h3>
+                <div class="general-box">
+                    <div class="box-2">
+                        <p class="box-2-no"></p>
+                        <p class="box-2-det">Today</p>
+                    </div>
+                    <div class="box-2">
+                        <p class="box-2-no"></p>
+                        <p class="box-2-det">This week</p>
+                    </div>
+                    <div class="box-2">
+                        <p class="box-2-no"></p>
+                        <p class="box-2-det">This month</p>
+                    </div>
+                </div>
+            </div>
+
+                <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Partner ID</th>
+                                    <th>Partner</th>
+                                    <th>User Details</th>
+                                    <th>Number of New Subscribers</th>
+                                    <th>No of Active Subscribers</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- tbody is being loaded from db -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download CSV Section -->
+            <button onclick="download_csv()" class="btn btn-info p-10">
+                Download CSV
+            </button>
+
+            <!-- <div class="line"></div> -->
+        </div>
+    </div>
+
+    <!-- JavaScript for CSV Download -->
+    <script src="./js/csv1.js"></script>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getAllPartners();
+            getAllSummary();
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+
+        // Function to Populate the Summary Boxes
+        async function getAllSummary() {
+            try { 
+                const response = await fetch('api.php/Subscription', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                let result = data.data;
+                // console.log(result[0].length);
+                let databody = "";
+                // Table Body Details
+
+                const totalUser = `${result[0].length}`
+
+                    databody = totalUser;
+
+                document.getElementById('total-users').append(databody)
+                // return result;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        // Function Populate the Table
+        async function getAllPartners() {
+            try {
+                const response = await fetch('api.php/GetPartnerSubscription', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                let result = data.data;
+                console.log(result);
+                let databody = "";
+                // load table row into table
+                for (const partner of result) {
+                    let filterSub = partner.PartnerDetails.filter(val => val.SubscriptionID != null);
+                    let subType = filterSub.map((item) => {
+                        let sub = item.UserPassport == null ? '' : item.UserPassport;
+                   
+                        let subOptions = `<option>${sub}</option>`;
+                        return subOptions;
+                    })
+
+                    let statusType = filterSub.map((value) => {
+                        let status = value.Status == null ? '' : value.Status;
+
+                        let statusOptions = `<option>${status}</option>`;
+                        return statusOptions;
+                    })
+                    
+                    let numSubs = Object.keys(subType).length;
+                    let numStatus = Object.keys(statusType).length;
+
+                    // Table Body Details
+                    const partnerInfo = `<tr>
+                    <td>${partner.PartnerID}</td>
+                    <td>${partner.BusinessName}</td>
+                    <td>
+                      <select>
+                       ${subType}
+                      </select>
+                    </td>
+                    <td>${numSubs}</td>
+                    <td>${numStatus}</td>
+                    </tr>`
+
+                    databody += partnerInfo;
+                    var my_array = [partner.PartnerID];
+                }
+                var last_element = my_array[my_array.length - 1];
+                localStorage.setItem("lastitem", last_element);
+                $('#dataTable > tbody').append(databody);
+                $('#dataTable').DataTable();
+                return result;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    </script>
+</body>
+
+</html>

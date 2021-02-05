@@ -10,7 +10,7 @@ function respond($code, $response)
 
 function getDb()
 {
-    $con = mysqli_connect("localhost", "rookietoosmart", "lAunch0ut!", "partnerdb");
+    $con = mysqli_connect("localhost", "Maestrojan21", "software4good", "partnerdb");
     if (mysqli_connect_errno()) {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
         exit(0);
@@ -102,7 +102,7 @@ try {
         $getBundle = [];
         if (mysqli_num_rows($query) > 0) {
             $gid = [];
-            $bname = [];
+            // $bname = [];
             $getBundlex = [];
             while ($row = mysqli_fetch_assoc($query)) {
                 $gid[] = $row['PartnerID'];
@@ -112,6 +112,7 @@ try {
                 $getBundlex[$row['PartnerID']]['ContractType'] =  $row['ContractType'];
                 $getBundlex[$row['PartnerID']]['PartnerAccessToken'] =  $row['PartnerAccessToken'];
                 $getBundlex[$row['PartnerID']]['CreatedDate'] =  $row['CreatedDate'];
+                // $getBundlex[$row['PartnerID']]['UserPassport'] = $row['UserPassport'];
                 $getBundlex[$row['PartnerID']]['PartnerDetails'][] = $row;
             }
             $gid = array_unique($gid);
@@ -124,7 +125,7 @@ try {
             respond(404, array('success' => false, 'error' => 'User Info not found'));
     } else if (stripos($_SERVER['REQUEST_URI'], '/Subscription') !== false) {
         $db = getDb();
-        $sql = "select * from Subscription";
+        $sql = "select SubscriptionID from Subscription";
         $query = mysqli_query($db, $sql);
         $Subscription = [];
 
@@ -133,8 +134,34 @@ try {
             $getSubscription = [];
             while ($row = mysqli_fetch_assoc($query)) {
                 $pid[] = $row['PartnerID'];
-                $getSubscription[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
-                $getSubscription[$row['PartnerID']]['Subscription'][] = $row;
+                // $getSubscription[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
+                $getSubscription[$row['PartnerID']][] = $row;
+            }
+
+            $pid = array_unique($pid);
+            $Subscription = [];
+            foreach ($pid as $key => $id) {
+                $Subscription[] = $getSubscription[$id];
+            }
+            respond(200, array('success' => true, 'data' => $Subscription));
+        } else
+            respond(404, array('success' => false, 'error' => 'Subscription not found'));
+    } else if (stripos($_SERVER['REQUEST_URI'], '/AccesslogSubscription') !== false) {
+        $db = getDb();
+        $sql = "sSELECT AccessLog.Timestamp, AccessLog.GameID, c.* FROM AccessLog LEFT JOIN Subscription as c ON c.SubscriptionID = AccessLog.SubscriptionID";
+        $query = mysqli_query($db, $sql);
+        $Subscription = [];
+
+        if (mysqli_num_rows($query) > 0) {
+            $pid = [];
+            $getSubscription = [];
+            while ($row = mysqli_fetch_assoc($query)) {
+                $gid[] = $row['PartnerID'];
+                $getBundlex[$row['PartnerID']]['Timestamp'] = $row['Timestamp'];
+                $getBundlex[$row['PartnerID']]['GameID'] =  $row['GameID'];
+                $getBundlex[$row['PartnerID']]['UserPassport'] =  $row['UserPassport'];
+                $getBundlex[$row['PartnerID']]['CreatedDate'] =  $row['CreatedDate'];
+                $getBundlex[$row['PartnerID']]['PartnerDetails'][] = $row;
             }
 
             $pid = array_unique($pid);
