@@ -40,9 +40,13 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <a class="mr-2" href="./dashboard.html">Dashboard</a>
-                    <a class="mr-2" href="tables.html">Tables</a>
-                    <a class="mr-2" href="./user1.html">Users Dashboard</a>
+                    <div class="text-center">
+                        <a class="pl-3 pr-3" href="tables.html">Tables</a>
+                        <a class="pl-3 pr-3" href="./user1.html">User Dashboard</a>
+                        <a class="pl-3 pr-3" href="./endpoint.html">Check Endpoints</a>
+                    </div>
+
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -146,7 +150,7 @@
                         <button class="btn btn-outline-success" onclick="viewCatalog()">View Catalog</button>
                     </div>
                     <div class="pb-3">
-                        <button class="btn btn-outline-success" onclick="filterCatalog()">Filter Catalog by Subject/Level and or Group</button>
+                        <button class="btn btn-outline-success" onclick="filterCatalog()">Filter Catalog </button>
                     </div>
                     <div class="pb-3">
                         <button class="btn btn-outline-success" onclick="viewList()">View List of Subjects</button>
@@ -202,13 +206,13 @@
                         <p><button onclick="group()" class="btn btn-outline-primary">Subject</button></p>
                         <p><button onclick="Level()" class="btn btn-outline-warning">Level</button></p>
                         <p><button onclick="subject()" class="btn btn-outline-dark">Group</button></p>
-                        <p><button onclick="subjectGroup()" class="btn btn-outline-light">Subject & Group</button></p>
+                        <p><button onclick="subjectGroup()" class="btn btn-outline-danger">Subject & Group</button></p>
                         <p><button onclick="subjectLevel()" class="btn btn-outline-success">Subject & Level</button></p>
                         <p><button onclick="GroupLevel()" class="btn btn-outline-info">Group & Level</button></p>
                         <p><button onclick="subjectGroupLevel()" class="btn btn-outline-secondary">Subject & Group & Level </button></p>
                     </div>
 
-                    <div class="pt-5 float-right">
+                    <div class="pt-2 float-right">
                         <button type="button" onclick="cancelBtn()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         <!-- <button type="submit" id="edit-partner" class="btn btn-primary" onclick="updatePartnerinfo()">Update</button> -->
                     </div>
@@ -254,20 +258,48 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div>
-                        <label>Enter UserPassport</label><span class="text-danger"> *</span>
-                        <input type="text" name="userpassport" id="userpassport" class="form-control" placeholder="Enter email address or phone number">
-                        <p class="userpassport-error text-danger d-none">please enter email or phone number</p>
-                    </div>
+                    <form>
+                        <div class="">
+                            <label>Enter PartnerID</label><span class="text-danger"> *</span>
+                            <input type="number" id="partnerid" class="form-control" placeholder="Enter PartnerID" required>
+                        </div>
+                        <div class="pt-3">
+                            <label>Enter Access token</label><span class="text-danger"> *</span>
+                            <input type="text" id="accesstkn" class="form-control" placeholder="Enter partner access token" required>
+                        </div>
+                        <div class="pt-3">
+                            <label>Enter UserPassport</label><span class="text-danger"> *</span>
+                            <input type="text" name="userpassport" id="userpassport" class="form-control" placeholder="Enter email address or phone number" required>
+                            <p class="userpassport-error text-danger d-none">please enter email or phone number</p>
+                        </div>
+                        <div class="pt-3 expirydiv">
+                            <label>Enter Expiry Date (Optional)</label>
+                            <input type="date" id="expiry-date" class="form-control expires" placeholder="DD-MM-YYYY" required>
+                        </div>
+                        <div class="pt-5 float-right">
+                            <button type="button" onclick="cancelBtn2()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <button type="button" onclick="next()" id="generate" class="btn btn-primary generate">Generate</button>
+                            <button type="button" onclick="next2()" id="generate2" class="btn btn-primary d-none generatebtn2">Generate</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-                    <div class="pt-3">
-                        <label>Enter Expiry Date (Optional)</label>
-                        <input type="number" name="expirydate" id="expirydate" class="form-control" placeholder="01-01-2021">
-                    </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Editpartnerinfo6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title6 create-modal-title">Click link below to test endpoint</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <a target="blank" id="endpoint-link2"></a>
                     <div class="pt-5 float-right">
                         <button type="button" onclick="cancelBtn2()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button type="button" onclick="next()" id="generate" class="btn btn-primary generate">Generate</button>
-                        <button type="button" onclick="next2()" id="generate2" class="btn btn-primary d-none generatebtn2">Generate</button>
                     </div>
                 </div>
             </div>
@@ -304,19 +336,32 @@
 
         </div>
     </div>
-    <div class="modal fade" id="Editpartnerinfo6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+
+    <div class="modal fade" id="Editpartnerinfo9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title6 create-modal-title">Click link below to test endpoint</h5>
+                    <h5 class="modal-title9 create-modal-title">Enter one or more Categories to continue</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <a target="blank" id="endpoint-link2"></a>
-                    <div class="pt-5 float-right">
-                        <button type="button" onclick="cancelBtn2()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <div>
+                        <label>Enter Group</label>
+                        <input type="text" id="group" class="form-control" placeholder="Enter Group">
+                    </div>
+                    <div class="pt-3">
+                        <label>Enter Level</label>
+                        <input type="text" id="level" class="form-control" placeholder="Enter Level">
+                    </div>
+                    <div class="pt-3">
+                        <label>Enter Subject</label>
+                        <input type="text" id="subject" class="form-control" placeholder="Enter Subject">
+                    </div>
+                    <div class="pt-2 float-right">
+                        <button type="button" onclick="cancelBtn()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="button" onclick="filterAllCatalog()" id="generate" class="btn btn-primary generate">Generate</button>
                     </div>
                 </div>
             </div>
@@ -424,8 +469,45 @@
         }
 
         function filterCatalog() {
-            $("#Editpartnerinfo3").modal().show();
+            $("#Editpartnerinfo9").modal().show();
             $("#Editpartnerinfo").modal().hide();
+        }
+
+        function filterAllCatalog() {
+            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                partnerid = storedItem[0],
+                accessToken = storedItem[1],
+                group = $('#group').val(),
+                level = $('#level').val(),
+                res = level.split(" "),
+                result = res.join("%20"),
+                urlEnd = `&action=catalogfilter`,
+                subject = $('#subject').val(),
+                groupUrl = `&Group`,
+                levelUrl = `&level`,
+                subjectUrl = `&Subject`;
+            if (group) {
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, groupUrl, group);
+            } else if (level) {
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, levelUrl, result);
+            } else if (subject) {
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, subjectUrl, subject);
+            } else if (group && level) {
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, groupUrl, group, levelUrl, result)
+            } else if (group && subject) {
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, groupUrl, group, subjectUrl, subject)
+            } else if (level && subject) {
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, levelUrl, result, subjectUrl, subject)
+            } else if (group && level && subject) {
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, groupUrl, group, levelUrl, result, subjectUrl, subject)
+            } else {
+                urlEnd = `&action=catalogfilter`;
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd)
+            }
+            $("#endpoint-link").attr("href", fullUrl)
+            $('#endpoint-link').append(fullUrl);
+            $('#Editpartnerinfo9').hide();
+            link()
         }
 
         function subject() {
@@ -473,24 +555,35 @@
         function subscribeUser() {
             $(".generatebtn2").addClass('d-none')
             $(".generate").removeClass('d-none')
+            $(".expirydiv").show();
             $("#Editpartnerinfo4").modal().hide();
             $("#Editpartnerinfo5").modal().show();
         }
+        // function to get expiry date entered
+        function date() {
+            var date = new Date($('#expiry-date').val());
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            expires = [day, month, year].join('-')
+        }
 
         function next() {
-            $("#Editpartnerinfo5").modal().hide();
-            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
-                partnerid = storedItem[0],
-                accessToken = storedItem[1],
+            // let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+            let partnerid = $('#partnerid').val(),
+                accessToken = $('#accesstkn').val(),
                 UserPassport = $('#userpassport').val(),
-                expiryDateEntered = $('#expirydate').val(),
-                // expiryDate = storedItem[3],
-                // d = expiryDate,
-                // date = d.split(' ')[0],
+                expiryDateEntered = date(),
                 urlEnd = `&action=subscribe`,
                 urlpass = `&userPassport=`,
-                // urldate = `&expiryDate=`,
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urlEnd);
+                urldate = `&expiryDate=`;
+            $("#Editpartnerinfo5").modal().hide();
+            if (expiryDateEntered = "") {
+                let fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urldate, expiryDateEntered, urlEnd);
+            } else {
+                let fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urlEnd);
+
+            }
             $("#endpoint-link2").attr("href", fullUrl);
             $('#endpoint-link2').append(fullUrl);
             console.log(fullUrl);
@@ -499,9 +592,9 @@
 
         function next2() {
             $("#Editpartnerinfo5").modal().hide();
-            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
-                partnerid = storedItem[0],
-                accessToken = storedItem[1],
+            //let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+            partnerid = $('#partnerid').val(),
+                accessToken = $('#accesstkn').val(),
                 UserPassport = $('#userpassport').val(),
                 urlEnd = `&action=unsubscribe`,
                 urlpass = `&userPassport=`,
@@ -513,8 +606,9 @@
         }
 
         function unsubscribeUser() {
-            $(".generatebtn2").removeClass('d-none')
+            $(".generatebtn2").addClass('d-none')
             $(".generate").addClass('d-none')
+            $(".expirydiv").hide();
             $("#Editpartnerinfo4").modal().hide();
             $("#Editpartnerinfo5").modal().show();
         }
@@ -555,6 +649,8 @@
         // $('.modal-backdrop').remove();
     </script>
 </body>
+
+</html>
 
 </html>
 
