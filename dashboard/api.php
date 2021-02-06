@@ -10,16 +10,12 @@ function respond($code, $response)
 
 function getDb()
 {
-    $con = mysqli_connect("localhost", "Maestrojan21", "software4good", "partnerdb");
+    $con = mysqli_connect("localhost", "rookietoosmart", "lAunch0ut!", "partnerdb");
     if (mysqli_connect_errno()) {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
         exit(0);
     }
     return $con;
-}
-
-function generateUrl () {
-    
 }
 
 if ($json = json_decode(file_get_contents("php://input"), true))
@@ -76,7 +72,42 @@ try {
             respond(200, array('success' => true, 'data' => 'Username && Password match'));
         } else
             respond(404, array('success' => false, 'error' => 'Incorrect Username or Password'));
-    } else if (stripos($_SERVER['REQUEST_URI'], "/GetAllPartners") !== false) {
+    } else if (stripos($_SERVER['REQUEST_URI'], '/Subscription') !== false) {
+        $db = getDb();
+        $sql = "select SubscriptionID from Subscription";
+        $query = mysqli_query($db, $sql);
+        $Subscription = [];
+
+        if (mysqli_num_rows($query) > 0) {
+            $pid = [];
+            $getSubscription = [];
+            while ($row = mysqli_fetch_assoc($query)) {
+                $pid[] = $row['PartnerID'];
+                // $getSubscription[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
+                $getSubscription[$row['PartnerID']][] = $row;
+            }
+
+            $pid = array_unique($pid);
+            $Subscription = [];
+            foreach ($pid as $key => $id) {
+                $Subscription[] = $getSubscription[$id];
+            }
+            respond(200, array('success' => true, 'data' => $Subscription));
+        } else
+            respond(404, array('success' => false, 'error' => 'Subscription not found'));
+    } else if (stripos($_SERVER['REQUEST_URI'], "/GetAllSubscription") !== false) {
+        $sql = "select * from Subscription";
+        $query = mysqli_query($db, $sql);
+        $result = [];
+        if (mysqli_num_rows($query) > 0) {
+            while ($row = mysqli_fetch_assoc($query)) {
+                $result[] = $row;
+            }
+            respond(200, array('success' => true, 'data' => $result));
+        } else
+            respond(404, array('success' => false, 'error' => 'User not found'));
+    }
+    else if (stripos($_SERVER['REQUEST_URI'], "/GetAllPartners") !== false) {
         $sql = "select * from Partner";
         $query = mysqli_query($db, $sql);
         $result = [];
@@ -106,7 +137,7 @@ try {
         $getBundle = [];
         if (mysqli_num_rows($query) > 0) {
             $gid = [];
-            // $bname = [];
+            $bname = [];
             $getBundlex = [];
             while ($row = mysqli_fetch_assoc($query)) {
                 $gid[] = $row['PartnerID'];
@@ -116,7 +147,7 @@ try {
                 $getBundlex[$row['PartnerID']]['ContractType'] =  $row['ContractType'];
                 $getBundlex[$row['PartnerID']]['PartnerAccessToken'] =  $row['PartnerAccessToken'];
                 $getBundlex[$row['PartnerID']]['CreatedDate'] =  $row['CreatedDate'];
-                // $getBundlex[$row['PartnerID']]['UserPassport'] = $row['UserPassport'];
+                $getBundlex[$row['PartnerID']]['UserPassport'] =  $row['UserPassport'];
                 $getBundlex[$row['PartnerID']]['PartnerDetails'][] = $row;
             }
             $gid = array_unique($gid);
@@ -129,7 +160,7 @@ try {
             respond(404, array('success' => false, 'error' => 'User Info not found'));
     } else if (stripos($_SERVER['REQUEST_URI'], '/Subscription') !== false) {
         $db = getDb();
-        $sql = "select SubscriptionID from Subscription";
+        $sql = "select * from Subscription";
         $query = mysqli_query($db, $sql);
         $Subscription = [];
 
@@ -138,34 +169,8 @@ try {
             $getSubscription = [];
             while ($row = mysqli_fetch_assoc($query)) {
                 $pid[] = $row['PartnerID'];
-                // $getSubscription[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
-                $getSubscription[$row['PartnerID']][] = $row;
-            }
-
-            $pid = array_unique($pid);
-            $Subscription = [];
-            foreach ($pid as $key => $id) {
-                $Subscription[] = $getSubscription[$id];
-            }
-            respond(200, array('success' => true, 'data' => $Subscription));
-        } else
-            respond(404, array('success' => false, 'error' => 'Subscription not found'));
-    } else if (stripos($_SERVER['REQUEST_URI'], '/AccesslogSubscription') !== false) {
-        $db = getDb();
-        $sql = "sSELECT AccessLog.Timestamp, AccessLog.GameID, c.* FROM AccessLog LEFT JOIN Subscription as c ON c.SubscriptionID = AccessLog.SubscriptionID";
-        $query = mysqli_query($db, $sql);
-        $Subscription = [];
-
-        if (mysqli_num_rows($query) > 0) {
-            $pid = [];
-            $getSubscription = [];
-            while ($row = mysqli_fetch_assoc($query)) {
-                $gid[] = $row['PartnerID'];
-                $getBundlex[$row['PartnerID']]['Timestamp'] = $row['Timestamp'];
-                $getBundlex[$row['PartnerID']]['GameID'] =  $row['GameID'];
-                $getBundlex[$row['PartnerID']]['UserPassport'] =  $row['UserPassport'];
-                $getBundlex[$row['PartnerID']]['CreatedDate'] =  $row['CreatedDate'];
-                $getBundlex[$row['PartnerID']]['PartnerDetails'][] = $row;
+                $getSubscription[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
+                $getSubscription[$row['PartnerID']]['Subscription'][] = $row;
             }
 
             $pid = array_unique($pid);
@@ -242,52 +247,6 @@ try {
             respond(200, array('success' => true, 'data' => $BundleCategory));
         } else
             respond(404, array('success' => false, 'error' => 'bundle games not found'));
-    } else if (stripos($_SERVER['REQUEST_URI'], '/Subscription') !== false) {
-        $db = getDb();
-        $sql = "select * from Subscription";
-        $query = mysqli_query($db, $sql);
-        $Subscription = [];
-
-        if (mysqli_num_rows($query) > 0) {
-            $pid = [];
-            $getSubscription = [];
-            while ($row = mysqli_fetch_assoc($query)) {
-                $pid[] = $row['PartnerID'];
-                $getSubscription[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
-                $getSubscription[$row['PartnerID']]['Subscription'][] = $row;
-            }
-
-            $pid = array_unique($pid);
-            $Subscription = [];
-            foreach ($pid as $key => $id) {
-                $Subscription[] = $getSubscription[$id];
-            }
-            respond(200, array('success' => true, 'data' => $Subscription));
-        } else
-            respond(404, array('success' => false, 'error' => 'Subscription not found'));
-    } else if (stripos($_SERVER['REQUEST_URI'], '/Accesslog') !== false) {
-        $db = getDb();
-        $sql = "select * from AccessLog";
-        $query = mysqli_query($db, $sql);
-        $AccessLog = [];
-
-        if (mysqli_num_rows($query) > 0) {
-            $pid = [];
-            $getLog = [];
-            while ($row = mysqli_fetch_assoc($query)) {
-                $pid[] = $row['SubscriptionID'];
-                $getLog[$row['SubscriptionID']]['SubscriptionID'] = $row['SubscriptionID'];
-                $getLog[$row['SubscriptionID']]['PartnerInfo'][] = $row;
-            }
-
-            $pid = array_unique($pid);
-            $AccessLog = [];
-            foreach ($pid as $key => $id) {
-                $AccessLog[] = $getLog[$id];
-            }
-            respond(200, array('success' => true, 'data' => $AccessLog));
-        } else
-            respond(404, array('success' => false, 'error' => 'AccessLog not found'));
     } else if (stripos($_SERVER['REQUEST_URI'], '/GetCustomGamesfromGame') !== false) {
         $db = getDb();
         // $PartnerID = $request['partnerId'];
@@ -353,41 +312,6 @@ try {
             respond(200, array('success' => true, 'data' => $getBundle));
         } else
             respond(404, array('success' => false, 'error' => 'Custom users not found'));
-    } else if (stripos($_SERVER['REQUEST_URI'], '/GetPartnerSubscription') !== false) {
-        $db = getDb();
-        $sql = "SELECT Subscription.SubscriptionID, Subscription.UserPassport, Subscription.CreatedDate, Subscription.ExpiryDate, Subscription.Status, c.* FROM Subscription LEFT JOIN Partner as c ON Subscription.PartnerID = c.PartnerID";
-        $query = mysqli_query($db, $sql);
-        $getBundle = [];
-        if (mysqli_num_rows($query) > 0) {
-            $gid = [];
-            $bname = [];
-            $getBundlex = [];
-            while ($row = mysqli_fetch_assoc($query)) {
-                $gid[] = $row['PartnerID'];
-                $getBundlex[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
-                $getBundlex[$row['PartnerID']]['BusinessName'] =  $row['BusinessName'];
-                $getBundlex[$row['PartnerID']]['ContactName'] =  $row['ContactName'];
-                $getBundlex[$row['PartnerID']]['ContractType'] =  $row['ContractType'];
-                $getBundlex[$row['PartnerID']]['PartnerAccessToken'] =  $row['PartnerAccessToken'];
-                $getBundlex[$row['PartnerID']]['UserPassport'] =  $row['UserPassport'];
-                $getBundlex[$row['PartnerID']]['ExpiryDate'] =  $row['ExpiryDate'];
-                $getBundlex[$row['PartnerID']]['CreatedDate'] =  $row['CreatedDate'];
-                $getBundlex[$row['PartnerID']]['PartnerDetails'][] = $row;
-            }
-            $gid = array_unique($gid);
-            $getBundle = [];
-            foreach ($gid as $key => $id) {
-                $getBundle[] = $getBundlex[$id];
-            }
-            respond(200, array('success' => true, 'data' => $getBundle));
-        } else
-            respond(404, array('success' => false, 'error' => 'User Info not found'));
-    } else if (stripos($_SERVER['REQUEST_URI'], '/Catalog') !== false) {
-        https://partners.9ijakids.com/index.php?partnerId=xxxxxx&accessToken=yyyyy&action=catalog;
-
-        //     respond(200, array('success' => true, 'data' => $getBundle));
-        // } else
-        //     respond(404, array('success' => false, 'error' => 'Custom users not found'));
     } else
         respond(400, array('success' => false, 'error' => 'resource or endpoint not found'));
 } catch (Exception $e) {

@@ -80,8 +80,9 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <a class="btn btn-success" href="tables.html">Tables</a>
-                    <a class="btn btn-warning" href="./userdashboard.html">Users Dashboard</a>
+                    <a href="tables.html">Tables</a>
+                    <a href="./user1.html">Users Dashboard</a>
+                    <a href="./endpoint.html">Endpoint</a>
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <!-- <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -451,7 +452,7 @@
                 $('#dataTable').DataTable();
                 return result;
             } catch (error) {
-                console.log(error);
+                // console.log(error);
             }
         }
 
@@ -489,14 +490,14 @@
                 $('.games-select').select2();
                 //console.log(result);;
             } catch (error) {
-                console.log(error);
+                // console.log(error);
             }
         }
 
         //Get all Bundle games
         async function getcustomganes() {
             // debugger
-            try {
+            // try {
                 const response = await fetch('api.php/GetCustomGamesfromGame', {
                     method: 'GET',
                     headers: {
@@ -516,10 +517,10 @@
                 //append data to option
                 gameSelect.insertAdjacentHTML("afterbegin", gameType);
                 $('.games-select').select2();
-
-            } catch (error) {
-                console.log(error);
-            }
+            // }
+            // } catch (error) {
+            //     console.log(error);
+            // }
         }
 
         const contractType = document.querySelector('#contract-type')
