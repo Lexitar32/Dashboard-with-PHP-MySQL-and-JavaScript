@@ -72,7 +72,105 @@ try {
             respond(200, array('success' => true, 'data' => 'Username && Password match'));
         } else
             respond(404, array('success' => false, 'error' => 'Incorrect Username or Password'));
-    } else if (stripos($_SERVER['REQUEST_URI'], '/Subscription') !== false) {
+    }
+    // For the Active Date Summary Box
+    else if (stripos($_SERVER['REQUEST_URI'], '/GetActiveDates') !== false) {
+        $db = getDb();
+        $sql = "SELECT DATE_FORMAT(Timestamp, '%Y-%m-%d') DateCreated FROM partnerdb.AccessLog;";
+        $query = mysqli_query($db, $sql);
+        $ActiveDate = [];
+
+        if (mysqli_num_rows($query) > 0) {
+            $pid = [];
+            $getActiveDate = [];
+            while ($row = mysqli_fetch_assoc($query)) {
+                $pid[] = $row[''];
+                $getActiveDate[$row['']][] = $row['DateCreated'];
+            }
+
+            $pid = array_unique($pid);
+            $ActiveDate = [];
+            foreach ($pid as $key => $id) {
+                $ActiveDate[] = $getActiveDate[$id];
+            }
+            respond(200, array('success' => true, 'data' => $ActiveDate));
+        } else 
+            respond(404, array('success' => false, 'error' => 'Subscription not found'));
+    }
+    // For the Subscription Date Summary Box
+    else if (stripos($_SERVER['REQUEST_URI'], '/GetSubscriptionDate') !== false) {
+        $db = getDb();
+        $sql = "SELECT DATE_FORMAT(CreatedDate, '%Y-%m-%d') DateCreated FROM partnerdb.Subscription";
+        $query = mysqli_query($db, $sql);
+        $SubscriptionDate = [];
+
+        if (mysqli_num_rows($query) > 0) {
+            $pid = [];
+            $getSubscriptionDate = [];
+            while ($row = mysqli_fetch_assoc($query)) {
+                $pid[] = $row[''];
+                $getSubscriptionDate[$row['']][] = $row['DateCreated'];
+            }
+
+            $pid = array_unique($pid);
+            $SubscriptionDate = [];
+            foreach ($pid as $key => $id) {
+                $SubscriptionDate[] = $getSubscriptionDate[$id];
+            }
+            respond(200, array('success' => true, 'data' => $SubscriptionDate));
+        } else 
+            respond(404, array('success' => false, 'error' => 'Subscription not found'));
+    }
+    // For the UserPassport and User Created Date
+    else if (stripos($_SERVER['REQUEST_URI'], '/GetUserPassport') !== false) {
+        $db = getDb();
+        $sql = "SELECT UserPassport, DATE_FORMAT(CreatedDate, '%Y-%m-%d') DateCreated FROM partnerdb.Subscription;";
+        $query = mysqli_query($db, $sql);
+        $SubscriptionDate = [];
+
+        if (mysqli_num_rows($query) > 0) {
+            $pid = [];
+            $getSubscriptionDate = [];
+            while ($row = mysqli_fetch_assoc($query)) {
+                $pid[] = $row['PartnerID'];
+                $getSubscriptionDate[$row['PartnerID']][] = $row;
+            }
+
+            $pid = array_unique($pid);
+            $SubscriptionDate = [];
+            foreach ($pid as $key => $id) {
+                $SubscriptionDate[] = $getSubscriptionDate[$id];
+            }
+            respond(200, array('success' => true, 'data' => $SubscriptionDate));
+        } else 
+            respond(404, array('success' => false, 'error' => 'Subscription not found'));
+    }
+    // For the Subscription Date Summary Box
+    else if (stripos($_SERVER['REQUEST_URI'], '/GetBusinessName') !== false) {
+        $db = getDb();
+        $sql = "SELECT BusinessName FROM partnerdb.Partner;";
+        $query = mysqli_query($db, $sql);
+        $BusinessName = [];
+
+        if (mysqli_num_rows($query) > 0) {
+            $pid = [];
+            $getBusinessName = [];
+            while ($row = mysqli_fetch_assoc($query)) {
+                $pid[] = $row[''];
+                $getBusinessName[$row['']][] = $row['BusinessName'];
+            }
+
+            $pid = array_unique($pid);
+            $BusinessName = [];
+            foreach ($pid as $key => $id) {
+                $BusinessName[] = $getBusinessName[$id];
+            }
+            respond(200, array('success' => true, 'data' => $BusinessName));
+        } else 
+            respond(404, array('success' => false, 'error' => 'Subscription not found'));
+    }
+    // To get total number of users
+    else if (stripos($_SERVER['REQUEST_URI'], '/Subscription') !== false) {
         $db = getDb();
         $sql = "select SubscriptionID from Subscription";
         $query = mysqli_query($db, $sql);
@@ -83,7 +181,6 @@ try {
             $getSubscription = [];
             while ($row = mysqli_fetch_assoc($query)) {
                 $pid[] = $row['PartnerID'];
-                // $getSubscription[$row['PartnerID']]['PartnerID'] = $row['PartnerID'];
                 $getSubscription[$row['PartnerID']][] = $row;
             }
 
@@ -95,7 +192,9 @@ try {
             respond(200, array('success' => true, 'data' => $Subscription));
         } else
             respond(404, array('success' => false, 'error' => 'Subscription not found'));
-    } else if (stripos($_SERVER['REQUEST_URI'], "/GetAllSubscription") !== false) {
+    } 
+    // Get the whole Subscription Table
+    else if (stripos($_SERVER['REQUEST_URI'], "/GetAllSubscription") !== false) {
         $sql = "select * from Subscription";
         $query = mysqli_query($db, $sql);
         $result = [];
@@ -107,6 +206,20 @@ try {
         } else
             respond(404, array('success' => false, 'error' => 'User not found'));
     }
+       // Get all Partners Table
+       else if (stripos($_SERVER['REQUEST_URI'], "/GetAllPartnerSub") !== false) {
+        $sql = "SELECT * FROM partnerdb.Partner LEFT JOIN partnerdb.Subscription ON partnerdb.Partner.PartnerID = partnerdb.Subscription.PartnerID;";
+        $query = mysqli_query($db, $sql);
+        $result = [];
+        if (mysqli_num_rows($query) > 0) {
+            while ($row = mysqli_fetch_assoc($query)) {
+                $result[] = $row;
+            }
+            respond(200, array('success' => true, 'data' => $result));
+        } else
+            respond(404, array('success' => false, 'error' => 'User not found'));
+    }
+    // Get all Partners Table
     else if (stripos($_SERVER['REQUEST_URI'], "/GetAllPartners") !== false) {
         $sql = "select * from Partner";
         $query = mysqli_query($db, $sql);
@@ -118,18 +231,8 @@ try {
             respond(200, array('success' => true, 'data' => $result));
         } else
             respond(404, array('success' => false, 'error' => 'User not found'));
-    } else if (stripos($_SERVER['REQUEST_URI'], "/GetAllPartners") !== false) {
-        $sql = "select * from Partner";
-        $query = mysqli_query($db, $sql);
-        $result = [];
-        if (mysqli_num_rows($query) > 0) {
-            while ($row = mysqli_fetch_assoc($query)) {
-                $result[] = $row;
-            }
-            respond(200, array('success' => true, 'data' => $result));
-        } else
-            respond(404, array('success' => false, 'error' => 'User not found'));
-    } 
+    }
+    // 
     else if (stripos($_SERVER['REQUEST_URI'], '/GetPartnerSubscription') !== false) {
         $db = getDb();
         $sql = "SELECT Subscription.SubscriptionID, Subscription.UserPassport, Subscription.CreatedDate, Subscription.ExpiryDate, Subscription.Status, c.* FROM Subscription LEFT JOIN Partner as c ON Subscription.PartnerID = c.PartnerID";

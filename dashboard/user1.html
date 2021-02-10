@@ -53,9 +53,6 @@
                         <li>
                             <a href="./user2.html">User Summary</a>
                         </li>
-                        <li>
-                            <a href="./user3.html">Detailed Breakdown</a>
-                        </li>
                     </ul>
                 </li>
                 <li>
@@ -111,15 +108,15 @@
                 <h3 class="page-header">New Subscriptions</h3>
                 <div class="general-box">
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="dayBox" class="box-2-no"></p>
                         <p class="box-2-det">Today</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="weekBox" class="box-2-no"></p>
                         <p class="box-2-det">This week</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="monthBox" class="box-2-no"></p>
                         <p class="box-2-det">This month</p>
                     </div>
                 </div>
@@ -131,15 +128,15 @@
                 <h3 class="page-header">Active Users</h3>
                 <div class="general-box">
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="dayActiveBox" class="box-2-no"></p>
                         <p class="box-2-det">Today</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="weekActiveBox" class="box-2-no"></p>
                         <p class="box-2-det">This week</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="monthActiveBox" class="box-2-no"></p>
                         <p class="box-2-det">This month</p>
                     </div>
                 </div>
@@ -155,11 +152,12 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Partner ID</th>
+                                    <th>PartnerID</th>
                                     <th>Partner</th>
                                     <th>No of User</th>
                                     <th>Number of New Subscribers</th>
                                     <th>No of Active Subscribers</th>
+                                    <th>No of Inactive Subscribers</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -196,15 +194,17 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+            getAllUsers();
+            getSubscriptionDates();
+            getActiveDates();
             getAllPartners();
-            getAllSummary();
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
         });
 
-        // Function to Populate the Summary Boxes
-        async function getAllSummary() {
+        // Function to Populate the Summary Boxes For Both Subscribers and Active Users (Daily, Weekly and Monthly)
+        async function getAllUsers() {
             try { 
                 const response = await fetch('api.php/Subscription', {
                     method: 'GET',
@@ -213,15 +213,17 @@
                     }
                 });
                 const data = await response.json();
+                // Result from the database
                 let result = data.data;
-                // console.log(result[0].length);
+
+                // Where all data is stored
                 let databody = "";
-                // Table Body Details
 
                 const totalUser = `${result[0].length}`
 
-                    databody = totalUser;
+                databody = totalUser;
 
+                // Appending to the HTML page
                 document.getElementById('total-users').append(databody)
                 // return result;
             } catch (error) {
@@ -229,10 +231,84 @@
             }
         }
 
-        // Function Populate the Table
-        async function getAllPartners() {
+        // Function to get Subscription Dates
+         async function getSubscriptionDates() {
             try {
-                const response = await fetch('api.php/GetAllPartners', {
+                const response = await fetch('api.php/GetSubscriptionDate', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                // Data from the database
+                let result = data.data;
+          
+                // Get Todays Subscribers
+                var d = new Date(); // Get Today's Date
+                getTodaySub = d.toISOString().substr(0, 10);
+                
+                var day = 0; // Start a Timer to catch all today's subscribers
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] == getTodaySub) {
+                        day++;    // Incrementing the timer by looping through and checking with index
+                    }
+                }
+
+                // Appending to the main HTML Page
+                document.getElementById('dayBox').append(day); 
+
+
+                // Get This week Subscribers
+                var curr = new Date(); // Get Today's Date
+                // Getting the first day of the month
+                var firstday = new Date(curr.setDate(curr.getDate() - curr.getDay()));
+                // Getting the last day of the month
+                var lastday = new Date(curr.setDate(curr.getDate() - curr.getDay()+6));
+
+                // Converting to ISO Date Format in JavaScript in order to match the format in the database
+                getFirstWeekDay = firstday.toISOString().substr(0,10);
+                getLastWeekDay = lastday.toISOString().substr(0,10);
+
+                var w = 0;
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] >= getFirstWeekDay && result[0][i] <= getLastWeekDay) {
+                        w++;    
+                    }
+                }
+                document.getElementById('weekBox').append(w);
+
+                // Get This Month Subscribers
+                var date = new Date();
+                var firstMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+                var lastMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+                // Converting to ISO Date Format in JavaScript in order to match the format in the database
+                getFirstDay = firstMonth.toISOString().substr(0,10);
+                getLastDay = lastMonth.toISOString().substr(0,10);
+
+                var k = 0;
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] >= getFirstDay && result[0][i] <= getLastDay) {
+                        k++;    
+                    }
+                }
+
+                document.getElementById('monthBox').append(k);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        // Function to get Active Dates
+        async function getActiveDates() {
+            try { 
+                const response = await fetch('api.php/GetActiveDates', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -240,40 +316,138 @@
                 });
                 const data = await response.json();
                 let result = data.data;
-                console.log(result);
+
+                // Get Todays Active Users
+               var dayActive = new Date();
+                getTodayActive = dayActive.toISOString().substr(0, 10);
+                
+                var dayCount = 0;
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] == getTodaySub) {
+                        dayCount++;    
+                    }
+                }
+
+                document.getElementById('dayActiveBox').append(dayCount);
+
+                // Get This week Active Users
+                var curr = new Date(); // Today's Date
+                var firstday = new Date(curr.setDate(curr.getDate() - curr.getDay()));
+                var lastday = new Date(curr.setDate(curr.getDate() - curr.getDay()+6));
+
+                  // Converting to ISO Date Format in JavaScript in order to match the format in the database
+                getFirstWeekDay = firstday.toISOString().substr(0,10);
+                getLastWeekDay = lastday.toISOString().substr(0,10);
+
+                var w = 0;
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] >= getFirstWeekDay && result[0][i] <= getLastWeekDay) {
+                        w++;    
+                    }
+                }
+                document.getElementById('weekActiveBox').append(w);
+
+
+                // Get This Month Active
+                var date = new Date(); // Today's Date
+                var firstMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+                var lastMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+                  // Converting to ISO Date Format in JavaScript in order to match the format in the database
+                getFirstDay = firstMonth.toISOString().substr(0,10);
+                getLastDay = lastMonth.toISOString().substr(0,10);
+
+                var k = 0;
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] >= getFirstDay && result[0][i] <= getLastDay) {
+                        k++;    
+                    }
+                }
+
+                document.getElementById('monthActiveBox').append(k);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        // Function to Populate the Main Table
+        async function getAllPartners() {
+            try {
+                const response = await fetch('api.php/GetAllPartnerSub', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+
+                // Data from the database
+                let result = data.data;
+               
+
+                // Function to fill the Number of Subscribers, Number of new subscribers and Active Subscribers
+                function getDetails(partnerID, details, result) {
+                    if(details == "Active") {
+                        result = result.filter(x => x.PartnerID == partnerID && x.Status == "Active")
+                        return result.length;
+                        //console.log(result)
+
+                    } else if (details == "Inactive") {
+                        result = result.filter(x => x.PartnerID == partnerID && x.Status == "Inactive")
+                        return result.length;
+                    }
+                    else if(details == "Users") {
+                        result = result.filter(x => x.PartnerID == partnerID)
+                        return result.length;
+                        //console.log(result)
+
+                    }
+                    else  if(details == "NewUsers") {
+                        var d = new Date()
+                        result = result.filter(x => x.PartnerID == partnerID)
+                        count = 0;
+                        for (x of result)  {
+                            let userDate = x.CreatedDate
+                            userDate = new Date(userDate)
+                            if (userDate.getMonth()+1 == d.getMonth()+1) { count++ }
+                        }
+                        return count;
+                        //console.log(result)
+
+                    }
+                }
+                
+
+                // Calling the api for the list of all partners
+                const res = await fetch('api.php/GetAllPartners', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const getData = await res.json();
+                let show = getData.data;
+
                 let databody = "";
-                // load table row into table
-                for (const partner of result) {
-                    // let filterSub = partner.PartnerDetails.filter(val => val.SubscriptionID != null);
-                    // let subType = filterSub.map((item) => {
-                    //     let sub = item.UserPassport == null ? '' : item.UserPassport;
-                   
-                    //     let subOptions = `<option>${sub}</option>`;
-                    //     return subOptions;
-                    // })
 
-                    // let statusType = filterSub.map((value) => {
-                    //     let status = value.Status == null ? '' : value.Status;
-
-                    //     let statusOptions = `<option>${status}</option>`;
-                    //     return statusOptions;
-                    // })
-                    
-                    // let numSubs = Object.keys(subType).length;
-                    // let numStatus = Object.keys(statusType).length;
-
+                for(partner of show) {
                     // Table Body Details
                     const partnerInfo = `<tr>
-                    <td>${partner.PartnerID}</td>
+                    <td>${partner.PartnerID}</td>    
                     <td>${partner.BusinessName}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>${getDetails(partner.PartnerID, "Users", result)}</td>
+                    <td>${getDetails(partner.PartnerID, "NewUsers", result)}</td>
+                    <td>${getDetails(partner.PartnerID, "Active", result)}</td>
+                    <td>${getDetails(partner.PartnerID, "Inactive", result)}</td>
                     </tr>`
 
                     databody += partnerInfo;
                     var my_array = [partner.PartnerID];
                 }
+
                 var last_element = my_array[my_array.length - 1];
                 localStorage.setItem("lastitem", last_element);
                 $('#dataTable > tbody').append(databody);
@@ -282,6 +456,28 @@
             } catch (error) {
                 console.log(error);
             }
+        }
+
+        // Downloading of CSV File
+        var data = [
+            ['Foo', 'programmer'],
+            ['Bar', 'bus driver'],
+            ['Moo', 'Reindeer Hunter']
+       ];
+     
+        function download_csv() {
+            var csv = 'Name,Title\n';
+            data.forEach(function(row) {
+                    csv += row.join(',');
+                    csv += "\n";
+            });
+        
+            console.log(csv);
+            var hiddenElement = document.createElement('a');
+            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+            hiddenElement.target = '_blank';
+            hiddenElement.download = 'people.csv';
+            hiddenElement.click();
         }
     </script>
 </body>

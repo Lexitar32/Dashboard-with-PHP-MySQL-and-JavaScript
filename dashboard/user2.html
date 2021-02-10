@@ -8,14 +8,25 @@
 
     <title>User Management Dashboard</title>
 
+    <!-- data tables css -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="./css/user1.css">
 
+    <!-- select2 styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <!-- toastr css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
 
 </head>
 
@@ -41,9 +52,6 @@
                         </li>
                         <li>
                             <a href="./user2.html">User Summary</a>
-                        </li>
-                        <li>
-                            <a href="./user3.html">Detailed Breakdown</a>
                         </li>
                     </ul>
                 </li>
@@ -86,6 +94,18 @@
                 </div>
             </nav>
 
+                 <!-- Search Filter -->
+            <div class="search-box mb-15">
+                <form>
+                    <legend>Select Partner</legend>
+                    <div class="mb-3">
+                        <select id="partnerList" class="form-select form-control">
+                            <option>Partners</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
             <div class="summary-box">
                 <h3 class="page-header"><i class="fas fa-chart-line"></i> Summary</h3>
                 <div class="box-1">
@@ -100,15 +120,15 @@
                 <h3 class="page-header">New Subscriptions</h3>
                 <div class="general-box">
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="dayBox" class="box-2-no"></p>
                         <p class="box-2-det">Today</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="weekBox" class="box-2-no"></p>
                         <p class="box-2-det">This week</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="monthBox" class="box-2-no"></p>
                         <p class="box-2-det">This month</p>
                     </div>
                 </div>
@@ -120,15 +140,15 @@
                 <h3 class="page-header">Active Users</h3>
                 <div class="general-box">
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="dayActiveBox" class="box-2-no"></p>
                         <p class="box-2-det">Today</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="weekActiveBox" class="box-2-no"></p>
                         <p class="box-2-det">This week</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no"></p>
+                        <p id="monthActiveBox" class="box-2-no"></p>
                         <p class="box-2-det">This month</p>
                     </div>
                 </div>
@@ -144,12 +164,14 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>S/N</th>
                                     <th>User</th>
-                                    <th>Partner</th>
+                                    <th>PartnerID</th>
                                     <th>New/Existing</th>
-                                    <th>No of games played</th>
+                                    <th>Date & Time</th>
+                                    <th>No of Games</th>
+                                    <th>Games</th>
                                     <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -160,50 +182,12 @@
                 </div>
             </div>
 
-                <!-- Edit partner information -->
-    <div class="modal fade" id="Editpartnerinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title create-modal-title">Edit Partner Information</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <label for="Business-name">Business Name</label>
-                        <input type="text" class="form-control" id="editedbusinessName" placeholder="Enter your business name" required>
-                        <label for="contact-name" class="pt-3">Contact Name</label>
-                        <input type="text" class="form-control" id="editedcontactName" placeholder="Enter contact name" required>
-                        <label for="Contract-type" class="pt-3">Contract Type</label>
-                        <select class="custom-select" id="editedcontract-type">
-                            <option value="Bundle">Bundle</option>
-                            <option value="Custom">Custom</option>
-                        </select>
-                        <label for="Status" class="pt-3">Status</label>
-                        <select class="custom-select" id="editedstatus">
-                            <option value="Active" selected>Active</option>
-                            <option value="Inactive">Inactive</option>
-                        </select>
-                        <div class="pt-4 float-right">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            <button type="submit" id="edit-partner" class="btn btn-primary" onclick="updatePartnerinfo()">Update</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
             <!-- Download CSV Section -->
             <button onclick="download_csv()" class="btn btn-info p-10">
                 Download CSV
             </button>
 
-            <!-- Email CSV Section -->
-            <button class="btn btn-info p-10">
+            <button onclick="download_csv()" class="btn btn-info p-10">
                 Email CSV
             </button>
 
@@ -211,7 +195,8 @@
         </div>
     </div>
 
-    <script src="./js/csv2.js"></script>
+    <!-- JavaScript for CSV Download -->
+    <script src="./js/csv1.js"></script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -220,19 +205,24 @@
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
+    <!-- data tables Javascript -->
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <!-- Select2 Javascript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>
+
+
     <script type="text/javascript">
                 $(document).ready(function () {
-            getAllPartners();
-            getAllSummary();
+                    getAllPartners();
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
         });
 
-        // Function to Populate the Summary Boxes
-        async function getAllSummary() {
+        // Getting All Partners
+        async function getAllPartners() {
             try { 
-                const response = await fetch('api.php/Subscription', {
+                const response = await fetch('api.php/GetBusinessName', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -240,25 +230,29 @@
                 });
                 const data = await response.json();
                 let result = data.data;
-              
                 let databody = "";
-              
 
-                const totalUser = `${result[0].length}`
+                result[0].map(value => {
+                    const partnerInfo= `<option>${value}</option>`;
 
-                    databody = totalUser;
+                    databody += partnerInfo;
+                })
 
-                document.getElementById('total-users').append(databody)
-              
+                $('#partnerList').append(databody);
+
+                tableBody = "";
+
             } catch (error) {
                 console.log(error);
             }
         }
 
-        // Function Populate the Table
-        async function getAllPartners() {
-            try {
-                const response = await fetch('api.php/GetPartnerSubscription', {
+        getAllPartners();
+
+        //   Function to Populate the Summary Boxes
+        async function getUsersOfPartners() {
+            try { 
+                const response = await fetch('api.php/GetUserPassport', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -266,104 +260,36 @@
                 });
                 const data = await response.json();
                 let result = data.data;
-                console.log(result);
+
+                console.log(result)
+
                 let databody = "";
-                // load table row into table
-                for (const partner of result) {
-                    let filterSub = partner.PartnerDetails.filter(val => val.SubscriptionID != null);
-                    let subType = filterSub.map((item) => {
-                        let sub = item.UserPassport == null ? '' : item.UserPassport;
-                   
-                        let subOptions = `<option>${sub}</option>`;
-                        return subOptions;
-                    })
 
-                    let statusType = filterSub.map((value) => {
-                        let status = value.Status == null ? '' : value.Status;
-
-                        let statusOptions = `<option>${status}</option>`;
-                        return statusOptions;
-                    })
-                    
-                    let numSubs = Object.keys(subType).length;
+                for(users of result[0]) {
+                    // const num2 = show[index];
+                    // console.log(num1)
 
                     // Table Body Details
                     const partnerInfo = `<tr>
+                    <td>${users.UserPassport}</td>    
                     <td></td>
-                    <td>
-                      <select>
-                       ${subType}
-                      </select>
-                    </td>
-                    <td>${partner.BusinessName}</td>
+                    <td>${users.DateCreated}</td>
                     <td></td>
                     <td></td>
-                    <td><button class="btn btn-primary btn-edit" data-toggle="modal" data-target="#Editpartnerinfo" onclick="Edit('${partner.BusinessName}', '${partner.ContactName}', '${partner.ContactName}', '${partner.Status}', '${partner.PartnerID}')">Edit</button></td>
+                    <td></td>
+                    <td><button class="btn btn-primary btn-edit" data-toggle="modal" data-target="#Editpartnerinfo" onclick="Edit('${users.UserPassport}')">Edit</button></td>
+                    <td><button class="btn btn-danger" id="cancel" onclick="deletePartner(${users.PartnerID})">Delete</button></td>
                     </tr>`
 
                     databody += partnerInfo;
-                    var my_array = [partner.PartnerID];
                 }
-                var last_element = my_array[my_array.length - 1];
-                localStorage.setItem("lastitem", last_element);
                 $('#dataTable > tbody').append(databody);
-                $('#dataTable').DataTable();
-                return result;
             } catch (error) {
                 console.log(error);
             }
         }
 
-            //function to edit partner info
-              function Edit(bname, cname, ctype, cstatus, id) {
-            $("#Editpartnerinfo").modal('toggle')
-            $('#editedbusinessName').val(bname);
-            $('#editedcontactName').val(cname);
-            $('#editedcontract-type option').filter(function() {
-                return $(this).val() === ctype
-            }).prop('selected', true);
-            $('#editedstatus option').filter(function() {
-                return $(this).val() === cstatus
-            }).prop('selected', true);
-            sessionStorage.setItem('partnerId', id);
-            // updatePartnerinfo(id)
-        }
-
-        //function to save edited partner information
-        async function updatePartnerinfo() {
-            const req = {
-                partnerId: sessionStorage.getItem('partnerId'),
-                businessName: $('#editedbusinessName').val(),
-                contactName: $('#editedcontactName').val(),
-                contractType: $("#editedcontract-type :selected").text(),
-                status: $("#editedstatus :selected").text(),
-            }
-            console.log(req);
-            let response = await fetch('api.php/UpdatePartnerinfo', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(req)
-
-            });
-            let data = await response.json()
-            if (data.success) {
-                toastr.success(
-                    'Partner information succesfully updated', {
-                        timeOut: 5000,
-                        fadeOut: 1000,
-                        onHidden: reload()
-                    }
-                )
-            } else {
-                console.log("failed")
-
-                function errorToastr() {
-                    toastr.error('Failed to add partner');
-                };
-            }
-        }
+        getUsersOfPartners();
     </script>
 </body>
 
