@@ -46,7 +46,7 @@
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <div class="text-center">
-                        <a class="pl-3 pr-3" href="tables.html">Tables</a>
+                        <a class="pl-3 pr-3" href="partner.html">Tables</a>
                         <a class="pl-3 pr-3" href="./userdashboard.html">User Dashboard</a>
                         <a class="pl-3 pr-3" href="./endpoint.html">Check Endpoints</a>
                     </div>
@@ -158,20 +158,10 @@
                         <button class="btn btn-outline-success" onclick="filterCatalog()">Filter Catalog </button>
                     </div>
                     <div class="pb-3">
-                        <button class="btn btn-outline-success" onclick="viewList()">View List of Subjects</button>
+                        <button class="btn btn-outline-success" onclick="viewList()">View List of Variables</button>
                     </div>
-                    <!-- <div class="pb-3">
-                        <button class="btn btn-outline-success" onclick="subscribeUser()">Subscribe a User</button>
-                    </div>
-                    <div class="pb-3">
-                        <button class="btn btn-outline-success" onclick="unsubscribeUser()">Unsubscribe a User</button>
-                    </div>
-                    <div class="pb-3">
-                        <button class="btn btn-outline-success" onclick="playGame()">Play a game</button>
-                    </div> -->
                     <div class="pt-3 float-right">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <!-- <button type="submit" id="edit-partner" class="btn btn-primary" onclick="updatePartnerinfo()">Update</button> -->
                     </div>
                 </div>
             </div>
@@ -221,15 +211,7 @@
                         <label for="Group & Level">Group & Level</label><br>
                         <input type="radio" id="other" name="filter" value="Subject & Group & Level">
                         <label for="Subject & Group & Level">Subject & Group & Level</label>
-                        <!-- <p><button onclick="group()" class="btn btn-outline-primary">Subject</button></p>
-                        <p><button onclick="Level()" class="btn btn-outline-warning">Level</button></p>
-                        <p><button onclick="subject()" class="btn btn-outline-dark">Group</button></p>
-                        <p><button onclick="subjectGroup()" class="btn btn-outline-danger">Subject & Group</button></p>
-                        <p><button onclick="subjectLevel()" class="btn btn-outline-success">Subject & Level</button></p>
-                        <p><button onclick="GroupLevel()" class="btn btn-outline-info">Group & Level</button></p>
-                        <p><button onclick="subjectGroupLevel()" class="btn btn-outline-secondary">Subject & Group & Level </button></p> -->
                     </div>
-
                     <div class="pt-2 float-right">
                         <button type="button" onclick="cancelBtn()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         <button onclick="filterAllCatalog()" id="generateLink" class="btn btn-primary">Generate</button>
@@ -264,7 +246,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="modal fade" id="Editpartnerinfo5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
@@ -357,7 +338,33 @@
 
         </div>
     </div>
+    <div class="modal fade" id="Editpartnerinfo8" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title8 create-modal-title">Select an action</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="subject()">Subject</button>
+                    </div>
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="group()">Group</button>
+                    </div>
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="level()">Level</button>
+                    </div>
+                    <div class="pt-5 float-right">
+                        <button type="button" id="cancelBtn" class="btn btn-danger"  onclick="cancelBtn()">Cancel</button>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </div>
     <div class="modal fade" id="Editpartnerinfo9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -559,6 +566,7 @@
         function filterCatalog() {
             $("#Editpartnerinfo9").modal().show();
             $("#Editpartnerinfo").modal().hide();
+            
         }
         //to check expiry
         function checkExpiry() {
@@ -580,47 +588,16 @@
             let groupUrl = group != '' ? `&Group=${group.split(' ').join('%20')}` : ''
             let levelUrl = level != '' ? `&Level=${level.split(' ').join('%20')}` : ''
             let subjectUrl = subject != '' ? `&Subject=${subject.split(' ').join('%20')}` : '';
-            //gameVal.innerHTML += gameVal.innerHTML.includes(parameter) ? '' : `${groupUrl}${levelUrl}${subjectUrl}`;
             gameVal.innerHTML = ''
             gameVal.innerHTML = `${url}${parameter}${groupUrl}${levelUrl}${subjectUrl}`;
             let fulLink = `${url}${parameter}${groupUrl}${levelUrl}${subjectUrl}`;
 
             $(".games").attr("href", fulLink);
-            // $('#endpoint-link').append(fullUrl);
-            // $("#Editpartnerinfo9").modal().hide();
-            // link()
-            // return fullUrl;
-            // link()
-
-            // let url = '';
-            // if (group != '') {
-            //     var str = group.split(' ').join('%20');
-            //     url = `${link}&Group=${str}`;
-            //     $('.games').attr("href", url)
-            //     $('.test').append("Click on link below to test endpoint");
-            //     $('.games').append(url);
-
-            // } else if (level != '') {
-            //     var str = level.split(' ').join('%20');
-            //     $('.games').attr("href", str)
-            //     $('.test').append("Click on link below to test endpoint");
-            //     $('.games').append(`&Level=${str}`);
-
-            // } else if (subject != '') {
-            //     var str = subject.split(' ').join('%20');
-            //     $('.games').attr("href", str)
-
-            //     $('.games').append(`&Subject=${str}`);
-            // } else {
-            //     $('.games').append(`
-            //         Please select an item `);
-            // }
         }
         const buttonGenerate = document.getElementById("generatemultilinks"),
             groupVal = document.getElementById("group"),
             levelVal = document.getElementById("level"),
             subjectVal = document.getElementById("subject");
-
         buttonGenerate.addEventListener('click', () => {
             generateLinks(groupVal.value, levelVal.value, subjectVal.value)
         })
@@ -633,6 +610,19 @@
         //function to view list of all subjects
         function viewList() {
             $("#Editpartnerinfo").modal().hide();
+            
+            $("#Editpartnerinfo8").modal().show();
+            // $("#Editpartnerinfo5").modal().show();
+            // let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+            //     partnerid = storedItem[0],
+            //     accessToken = storedItem[1],
+            //     urlEnd = `&action=subject`,
+            //     fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
+            // $("#endpoint-link").attr("href", fullUrl)
+            // $('#endpoint-link').append(fullUrl);
+            // link()
+        }
+        function subject() {
             let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
                 partnerid = storedItem[0],
                 accessToken = storedItem[1],
@@ -640,6 +630,32 @@
                 fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
             $("#endpoint-link").attr("href", fullUrl)
             $('#endpoint-link').append(fullUrl);
+            $("#Editpartnerinfo8").modal().hide();
+            
+            link()
+        }
+        function group(){
+            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                partnerid = storedItem[0],
+                accessToken = storedItem[1],
+                urlEnd = `&action=group`,
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
+            $("#endpoint-link").attr("href", fullUrl)
+            $('#endpoint-link').append(fullUrl);
+            $("#Editpartnerinfo8").modal().hide();
+            
+            link()
+        }
+        function level(){
+            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                partnerid = storedItem[0],
+                accessToken = storedItem[1],
+                urlEnd = `&action=level`,
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
+            $("#endpoint-link").attr("href", fullUrl)
+            $('#endpoint-link').append(fullUrl);
+            $("#Editpartnerinfo8").modal().hide();
+            
             link()
         }
         //function to check if userpassport field is empty
@@ -654,6 +670,7 @@
             $(".generate").removeClass('d-none')
             $(".expirydiv").show();
             $("#Editpartnerinfo4").modal().hide();
+            
             $("#Editpartnerinfo5").modal().show();
         }
 
@@ -677,6 +694,7 @@
                 urlpass = ` & userPassport = `,
                 urldate = ` & expiryDate = `;
             $("#Editpartnerinfo5").modal().hide();
+            
             if (expiryDateEntered != "") {
                 let fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urldate, expiryDateEntered, urlEnd);
             } else {
@@ -690,6 +708,7 @@
         //function to generate url to unsubscribe a user 
         function generateUrLink2() {
             $("#Editpartnerinfo5").modal().hide();
+            
             partnerid = $('#partnerid').val(),
                 accessToken = $('#accesstkn').val(),
                 UserPassport = $('#userpassport').val(),
@@ -707,11 +726,13 @@
             $(".generate").addClass('d-none')
             $(".expirydiv").hide();
             $("#Editpartnerinfo4").modal().hide();
+            
             $("#Editpartnerinfo5").modal().show();
         }
         //function to hide select an action div
         function playGame() {
             $("#Editpartnerinfo4").modal().hide();
+            
             $("#Editpartnerinfo7").modal().show();
         }
         //function to generate url to play game 
@@ -721,6 +742,7 @@
                 $('.error-class2').removeClass("d-none")
             } else {
                 $("#Editpartnerinfo7").modal().hide();
+                
                 let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
                     url = `
                 https: //partners.9ijakids.com/index.php/play?partnerId=`,
