@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>User Management Dashboard</title>
+
+    <!-- data tables css -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="./css/user1.css">
+
+    <!-- select2 styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <!-- toastr css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Partner-Users</h3>
+                <strong>PU</strong>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i>
+                        View Summary
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="./user1.html">General Summary</a>
+                        </li>
+                        <li>
+                            <a href="./user2.html">User Summary</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="./user4.html">
+                        <i class="fas fa-user-plus"></i>
+                        Subscribe User
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Side-Toggle</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="./dashboard.html">Dashboard</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="./tables.html">Tables</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="./endpoint.html">Endpoint</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="summary-box">
+                <h3 class="page-header"><i class="fas fa-chart-line"></i> Summary</h3>
+                <div class="box-1">
+                    <p id="total-users" class="box-1-no"></p>
+                    <p class="box-1-det">Total no of users</p>
+                </div>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="summary-box-1">
+                <h3 class="page-header">New Subscriptions</h3>
+                <div class="general-box">
+                    <div class="box-2">
+                        <p id="dayBox" class="box-2-no"></p>
+                        <p class="box-2-det">Today</p>
+                    </div>
+                    <div class="box-2">
+                        <p id="weekBox" class="box-2-no"></p>
+                        <p class="box-2-det">This week</p>
+                    </div>
+                    <div class="box-2">
+                        <p id="monthBox" class="box-2-no"></p>
+                        <p class="box-2-det">This month</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="summary-box-1">
+                <h3 class="page-header">Active Users</h3>
+                <div class="general-box">
+                    <div class="box-2">
+                        <p id="dayActiveBox" class="box-2-no"></p>
+                        <p class="box-2-det">Today</p>
+                    </div>
+                    <div class="box-2">
+                        <p id="weekActiveBox" class="box-2-no"></p>
+                        <p class="box-2-det">This week</p>
+                    </div>
+                    <div class="box-2">
+                        <p id="monthActiveBox" class="box-2-no"></p>
+                        <p class="box-2-det">This month</p>
+                    </div>
+                </div>
+            </div>
+
+                <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>PartnerID</th>
+                                    <th>Partner</th>
+                                    <th>No of User</th>
+                                    <th>Number of New Subscribers</th>
+                                    <th>No of Active Subscribers</th>
+                                    <th>No of Inactive Subscribers</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- tbody is being loaded from db -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download CSV Section -->
+            <button onclick="download_csv()" class="btn btn-info p-10">
+                Download CSV
+            </button>
+
+            <!-- <div class="line"></div> -->
+        </div>
+    </div>
+
+    <!-- JavaScript for CSV Download -->
+    <script src="./js/csv1.js"></script>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <!-- data tables Javascript -->
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <!-- Select2 Javascript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getAllUsers();
+            getSubscriptionDates();
+            getActiveDates();
+            getAllPartners();
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+
+        // Function to Populate the Summary Boxes For Both Subscribers and Active Users (Daily, Weekly and Monthly)
+        async function getAllUsers() {
+            try { 
+                const response = await fetch('api.php/Subscription', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                // Result from the database
+                let result = data.data;
+
+                // Where all data is stored
+                let databody = "";
+
+                const totalUser = `${result[0].length}`
+
+                databody = totalUser;
+
+                // Appending to the HTML page
+                document.getElementById('total-users').append(databody)
+                // return result;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        // Function to get Subscription Dates
+         async function getSubscriptionDates() {
+            try {
+                const response = await fetch('api.php/GetSubscriptionDate', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                // Data from the database
+                let result = data.data;
+          
+                // Get Todays Subscribers
+                var d = new Date(); // Get Today's Date
+                getTodaySub = d.toISOString().substr(0, 10);
+                
+                var day = 0; // Start a Timer to catch all today's subscribers
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] == getTodaySub) {
+                        day++;    // Incrementing the timer by looping through and checking with index
+                    }
+                }
+
+                // Appending to the main HTML Page
+                document.getElementById('dayBox').append(day); 
+
+
+                // Get This week Subscribers
+                var curr = new Date(); // Get Today's Date
+                // Getting the first day of the month
+                var firstday = new Date(curr.setDate(curr.getDate() - curr.getDay()));
+                // Getting the last day of the month
+                var lastday = new Date(curr.setDate(curr.getDate() - curr.getDay()+6));
+
+                // Converting to ISO Date Format in JavaScript in order to match the format in the database
+                getFirstWeekDay = firstday.toISOString().substr(0,10);
+                getLastWeekDay = lastday.toISOString().substr(0,10);
+
+                var w = 0;
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] >= getFirstWeekDay && result[0][i] <= getLastWeekDay) {
+                        w++;    
+                    }
+                }
+                document.getElementById('weekBox').append(w);
+
+                // Get This Month Subscribers
+                var date = new Date();
+                var firstMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+                var lastMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+                // Converting to ISO Date Format in JavaScript in order to match the format in the database
+                getFirstDay = firstMonth.toISOString().substr(0,10);
+                getLastDay = lastMonth.toISOString().substr(0,10);
+
+                var k = 0;
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] >= getFirstDay && result[0][i] <= getLastDay) {
+                        k++;    
+                    }
+                }
+
+                document.getElementById('monthBox').append(k);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        // Function to get Active Dates
+        async function getActiveDates() {
+            try { 
+                const response = await fetch('api.php/GetActiveDates', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                let result = data.data;
+
+                // Get Todays Active Users
+               var dayActive = new Date();
+                getTodayActive = dayActive.toISOString().substr(0, 10);
+                
+                var dayCount = 0;
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] == getTodaySub) {
+                        dayCount++;    
+                    }
+                }
+
+                document.getElementById('dayActiveBox').append(dayCount);
+
+                // Get This week Active Users
+                var curr = new Date(); // Today's Date
+                var firstday = new Date(curr.setDate(curr.getDate() - curr.getDay()));
+                var lastday = new Date(curr.setDate(curr.getDate() - curr.getDay()+6));
+
+                  // Converting to ISO Date Format in JavaScript in order to match the format in the database
+                getFirstWeekDay = firstday.toISOString().substr(0,10);
+                getLastWeekDay = lastday.toISOString().substr(0,10);
+
+                var w = 0;
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] >= getFirstWeekDay && result[0][i] <= getLastWeekDay) {
+                        w++;    
+                    }
+                }
+                document.getElementById('weekActiveBox').append(w);
+
+
+                // Get This Month Active
+                var date = new Date(); // Today's Date
+                var firstMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+                var lastMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+                  // Converting to ISO Date Format in JavaScript in order to match the format in the database
+                getFirstDay = firstMonth.toISOString().substr(0,10);
+                getLastDay = lastMonth.toISOString().substr(0,10);
+
+                var k = 0;
+
+                for (let i = 0; i < result[0].length; i++) {
+                    if (result[0][i] >= getFirstDay && result[0][i] <= getLastDay) {
+                        k++;    
+                    }
+                }
+
+                document.getElementById('monthActiveBox').append(k);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        // Function to Populate the Main Table
+        async function getAllPartners() {
+            try {
+                const response = await fetch('api.php/GetAllPartnerSub', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+
+                // Data from the database
+                let result = data.data;
+               
+
+                // Function to fill the Number of Subscribers, Number of new subscribers and Active Subscribers
+                function getDetails(partnerID, details, result) {
+                    if(details == "Active") {
+                        result = result.filter(x => x.PartnerID == partnerID && x.Status == "Active")
+                        return result.length;
+                        //console.log(result)
+
+                    } else if (details == "Inactive") {
+                        result = result.filter(x => x.PartnerID == partnerID && x.Status == "Inactive")
+                        return result.length;
+                    }
+                    else if(details == "Users") {
+                        result = result.filter(x => x.PartnerID == partnerID)
+                        return result.length;
+                        //console.log(result)
+
+                    }
+                    else  if(details == "NewUsers") {
+                        var d = new Date()
+                        result = result.filter(x => x.PartnerID == partnerID)
+                        count = 0;
+                        for (x of result)  {
+                            let userDate = x.CreatedDate
+                            userDate = new Date(userDate)
+                            if (userDate.getMonth()+1 == d.getMonth()+1) { count++ }
+                        }
+                        return count;
+                        //console.log(result)
+
+                    }
+                }
+                
+
+                // Calling the api for the list of all partners
+                const res = await fetch('api.php/GetAllPartners', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const getData = await res.json();
+                let show = getData.data;
+
+                let databody = "";
+
+                for(partner of show) {
+                    // Table Body Details
+                    const partnerInfo = `<tr>
+                    <td>${partner.PartnerID}</td>    
+                    <td>${partner.BusinessName}</td>
+                    <td>${getDetails(partner.PartnerID, "Users", result)}</td>
+                    <td>${getDetails(partner.PartnerID, "NewUsers", result)}</td>
+                    <td>${getDetails(partner.PartnerID, "Active", result)}</td>
+                    <td>${getDetails(partner.PartnerID, "Inactive", result)}</td>
+                    </tr>`
+
+                    databody += partnerInfo;
+                    var my_array = [partner.PartnerID];
+                }
+
+                var last_element = my_array[my_array.length - 1];
+                localStorage.setItem("lastitem", last_element);
+                $('#dataTable > tbody').append(databody);
+                $('#dataTable').DataTable();
+                return result;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        // Downloading of CSV File
+        var data = [
+            ['Foo', 'programmer'],
+            ['Bar', 'bus driver'],
+            ['Moo', 'Reindeer Hunter']
+       ];
+     
+        function download_csv() {
+            var csv = 'Name,Title\n';
+            data.forEach(function(row) {
+                    csv += row.join(',');
+                    csv += "\n";
+            });
+        
+            console.log(csv);
+            var hiddenElement = document.createElement('a');
+            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+            hiddenElement.target = '_blank';
+            hiddenElement.download = 'people.csv';
+            hiddenElement.click();
+        }
+    </script>
+</body>
+
+</html>

@@ -8,14 +8,25 @@
 
     <title>User Management Dashboard</title>
 
+    <!-- data tables css -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="./css/style4.css">
+    <link rel="stylesheet" href="./css/user1.css">
+
+    <!-- select2 styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <!-- toastr css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
 
 </head>
 
@@ -33,66 +44,24 @@
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-chart-line"></i>
-                        Summary
+                        View Summary
                     </a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="#">User Summary</a>
+                            <a href="./user1.html">General Summary</a>
                         </li>
                         <li>
-                            <a href="#">Detailed Breakdown</a>
+                            <a href="./user2.html">User Summary</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="./user4.html">
                         <i class="fas fa-user-plus"></i>
                         Subscribe User
                     </a>
-                    <!-- <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-copy"></i>
-                        Pages
-                    </a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul> -->
                 </li>
-                <!-- <li>
-                    <a href="#">
-                        <i class="fas fa-image"></i>
-                        Portfolio
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-question"></i>
-                        FAQ
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-paper-plane"></i>
-                        Contact
-                    </a>
-                </li> -->
             </ul>
-
-            <!-- <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
-            </ul> -->
         </nav>
 
         <!-- Page Content  -->
@@ -103,35 +72,44 @@
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
-                        <span>Toggle Sidebar</span>
+                        <span>Side-Toggle</span>
                     </button>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
 
-                    <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Page</a>
+                                <a class="nav-link" href="./dashboard.html">Dashboard</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="./tables.html">Tables</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="./endpoint.html">Endpoint</a>
                             </li>
                         </ul>
-                    </div> -->
+                    </div>
                 </div>
             </nav>
+
+                 <!-- Search Filter -->
+            <div class="search-box mb-15">
+                <form>
+                    <legend>Select Partner</legend>
+                    <div class="mb-3">
+                        <select id="partnerList" class="form-select form-control">
+                            <option>Partners</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
 
             <div class="summary-box">
                 <h3 class="page-header"><i class="fas fa-chart-line"></i> Summary</h3>
                 <div class="box-1">
-                    <p class="box-1-no">5500</p>
+                    <p id="total-users" class="box-1-no"></p>
                     <p class="box-1-det">Total no of users</p>
                 </div>
             </div>
@@ -142,15 +120,15 @@
                 <h3 class="page-header">New Subscriptions</h3>
                 <div class="general-box">
                     <div class="box-2">
-                        <p class="box-2-no">5500</p>
+                        <p id="dayBox" class="box-2-no"></p>
                         <p class="box-2-det">Today</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no">5500</p>
+                        <p id="weekBox" class="box-2-no"></p>
                         <p class="box-2-det">This week</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no">5500</p>
+                        <p id="monthBox" class="box-2-no"></p>
                         <p class="box-2-det">This month</p>
                     </div>
                 </div>
@@ -162,15 +140,15 @@
                 <h3 class="page-header">Active Users</h3>
                 <div class="general-box">
                     <div class="box-2">
-                        <p class="box-2-no">5500</p>
+                        <p id="dayActiveBox" class="box-2-no"></p>
                         <p class="box-2-det">Today</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no">5500</p>
+                        <p id="weekActiveBox" class="box-2-no"></p>
                         <p class="box-2-det">This week</p>
                     </div>
                     <div class="box-2">
-                        <p class="box-2-no">5500</p>
+                        <p id="monthActiveBox" class="box-2-no"></p>
                         <p class="box-2-det">This month</p>
                     </div>
                 </div>
@@ -186,11 +164,14 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>No of Users</th>
-                                    <th>Partner</th>
-                                    <th>User Details</th>
-                                    <th>Number of New Subscribers</th>
-                                    <th>No of Active Subscribers</th>
+                                    <th>User</th>
+                                    <th>PartnerID</th>
+                                    <th>New/Existing</th>
+                                    <th>Date & Time</th>
+                                    <th>No of Games</th>
+                                    <th>Games</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -202,13 +183,20 @@
             </div>
 
             <!-- Download CSV Section -->
-            <button class="btn btn-info p-10">
+            <button onclick="download_csv()" class="btn btn-info p-10">
                 Download CSV
+            </button>
+
+            <button onclick="download_csv()" class="btn btn-info p-10">
+                Email CSV
             </button>
 
             <!-- <div class="line"></div> -->
         </div>
     </div>
+
+    <!-- JavaScript for CSV Download -->
+    <script src="./js/csv1.js"></script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -217,12 +205,91 @@
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
+    <!-- data tables Javascript -->
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <!-- Select2 Javascript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>
+
+
     <script type="text/javascript">
-        $(document).ready(function () {
+                $(document).ready(function () {
+                    getAllPartners();
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
         });
+
+        // Getting All Partners
+        async function getAllPartners() {
+            try { 
+                const response = await fetch('api.php/GetBusinessName', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                let result = data.data;
+                let databody = "";
+
+                result[0].map(value => {
+                    const partnerInfo= `<option>${value}</option>`;
+
+                    databody += partnerInfo;
+                })
+
+                $('#partnerList').append(databody);
+
+                tableBody = "";
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getAllPartners();
+
+        //   Function to Populate the Summary Boxes
+        async function getUsersOfPartners() {
+            try { 
+                const response = await fetch('api.php/GetUserPassport', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                let result = data.data;
+
+                console.log(result)
+
+                let databody = "";
+
+                for(users of result[0]) {
+                    // const num2 = show[index];
+                    // console.log(num1)
+
+                    // Table Body Details
+                    const partnerInfo = `<tr>
+                    <td>${users.UserPassport}</td>    
+                    <td></td>
+                    <td>${users.DateCreated}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button class="btn btn-primary btn-edit" data-toggle="modal" data-target="#Editpartnerinfo" onclick="Edit('${users.UserPassport}')">Edit</button></td>
+                    <td><button class="btn btn-danger" id="cancel" onclick="deletePartner(${users.PartnerID})">Delete</button></td>
+                    </tr>`
+
+                    databody += partnerInfo;
+                }
+                $('#dataTable > tbody').append(databody);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getUsersOfPartners();
     </script>
 </body>
 

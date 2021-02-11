@@ -82,7 +82,7 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <div class="text-center">
                         <a class="pl-3 pr-3" href="tables.html">Tables</a>
-                        <a class="pl-3 pr-3" href="./userdashboard.html">User Dashboard</a>
+                        <a class="pl-3 pr-3" href="./user1.html">User Dashboard</a>
                         <a class="pl-3 pr-3" href="./endpoint.html">Check Endpoints</a>
                     </div>
                     <!-- Sidebar Toggle (Topbar) -->
@@ -453,7 +453,7 @@
                 $('#dataTable').DataTable();
                 return result;
             } catch (error) {
-                console.log(error);
+                // console.log(error);
             }
         }
 
@@ -491,14 +491,14 @@
                 $('.games-select').select2();
                 //console.log(result);;
             } catch (error) {
-                console.log(error);
+                // console.log(error);
             }
         }
 
         //Get all Bundle games
         async function getcustomganes() {
             // debugger
-            try {
+            // try {
                 const response = await fetch('api.php/GetCustomGamesfromGame', {
                     method: 'GET',
                     headers: {
@@ -518,10 +518,10 @@
                 //append data to option
                 gameSelect.insertAdjacentHTML("afterbegin", gameType);
                 $('.games-select').select2();
-
-            } catch (error) {
-                console.log(error);
-            }
+            // }
+            // } catch (error) {
+            //     console.log(error);
+            // }
         }
 
         const contractType = document.querySelector('#contract-type')
