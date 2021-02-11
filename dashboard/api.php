@@ -229,10 +229,8 @@ try {
             respond(200, array('success' => true, 'data' => $result));
         } else
             respond(404, array('success' => false, 'error' => 'User not found'));
-    }
-       // Get all Partners Table
-       else if (stripos($_SERVER['REQUEST_URI'], "/GetAllPartnerSub") !== false) {
-        $sql = "SELECT * FROM partnerdb.Partner LEFT JOIN partnerdb.Subscription ON partnerdb.Partner.PartnerID = partnerdb.Subscription.PartnerID;";
+    } else if (stripos($_SERVER['REQUEST_URI'], "/GetGroup") !== false) {
+        $sql = "select * from groupcategory";
         $query = mysqli_query($db, $sql);
         $result = [];
         if (mysqli_num_rows($query) > 0) {
@@ -241,6 +239,30 @@ try {
             }
             respond(200, array('success' => true, 'data' => $result));
         } else
+            respond(404, array('success' => false, 'error' => 'Groups not found'));
+    } else if (stripos($_SERVER['REQUEST_URI'], "/GetLevel") !== false) {
+        $sql = "select * from level";
+        $query = mysqli_query($db, $sql);
+        $result = [];
+        if (mysqli_num_rows($query) > 0) {
+            while ($row = mysqli_fetch_assoc($query)) {
+                $result[] = $row;
+            }
+            respond(200, array('success' => true, 'data' => $result));
+        } else
+            respond(404, array('success' => false, 'error' => 'Levels not found'));
+    } else if (stripos($_SERVER['REQUEST_URI'], "/GetSubject") !== false) {
+        $sql = "select * from Subject";
+        $query = mysqli_query($db, $sql);
+        $result = [];
+        if (mysqli_num_rows($query) > 0) {
+            while ($row = mysqli_fetch_assoc($query)) {
+                $result[] = $row;
+            }
+            respond(200, array('success' => true, 'data' => $result));
+        } else
+            respond(404, array('success' => false, 'error' => 'Subjects not found'));
+    } else if (stripos($_SERVER['REQUEST_URI'], "/GetAllPartners") !== false) {
             respond(404, array('success' => false, 'error' => 'User not found'));
     }
     // Get all Partners Table

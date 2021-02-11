@@ -26,6 +26,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" />
 
 </head>
+<style>
+    .games {
+        word-wrap: break-word;
+    }
+</style>
 
 <body id="page-top">
 
@@ -41,8 +46,13 @@
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <div class="text-center">
+<<<<<<< HEAD
+                        <a class="pl-3 pr-3" href="partner.html">Tables</a>
+                        <a class="pl-3 pr-3" href="./userdashboard.html">User Dashboard</a>
+=======
                         <a class="pl-3 pr-3" href="tables.html">Tables</a>
                         <a class="pl-3 pr-3" href="./user1.html">User Dashboard</a>
+>>>>>>> d08bbaf1504791df33224d416a72232ed5e4d640
                         <a class="pl-3 pr-3" href="./endpoint.html">Check Endpoints</a>
                     </div>
 
@@ -153,20 +163,10 @@
                         <button class="btn btn-outline-success" onclick="filterCatalog()">Filter Catalog </button>
                     </div>
                     <div class="pb-3">
-                        <button class="btn btn-outline-success" onclick="viewList()">View List of Subjects</button>
+                        <button class="btn btn-outline-success" onclick="viewList()">View List of Variables</button>
                     </div>
-                    <!-- <div class="pb-3">
-                        <button class="btn btn-outline-success" onclick="subscribeUser()">Subscribe a User</button>
-                    </div>
-                    <div class="pb-3">
-                        <button class="btn btn-outline-success" onclick="unsubscribeUser()">Unsubscribe a User</button>
-                    </div>
-                    <div class="pb-3">
-                        <button class="btn btn-outline-success" onclick="playGame()">Play a game</button>
-                    </div> -->
                     <div class="pt-3 float-right">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <!-- <button type="submit" id="edit-partner" class="btn btn-primary" onclick="updatePartnerinfo()">Update</button> -->
                     </div>
                 </div>
             </div>
@@ -189,7 +189,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="modal fade" id="Editpartnerinfo3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
@@ -202,18 +201,25 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="text-center">
-                        <p><button onclick="group()" class="btn btn-outline-primary">Subject</button></p>
-                        <p><button onclick="Level()" class="btn btn-outline-warning">Level</button></p>
-                        <p><button onclick="subject()" class="btn btn-outline-dark">Group</button></p>
-                        <p><button onclick="subjectGroup()" class="btn btn-outline-danger">Subject & Group</button></p>
-                        <p><button onclick="subjectLevel()" class="btn btn-outline-success">Subject & Level</button></p>
-                        <p><button onclick="GroupLevel()" class="btn btn-outline-info">Group & Level</button></p>
-                        <p><button onclick="subjectGroupLevel()" class="btn btn-outline-secondary">Subject & Group & Level </button></p>
+                    <div>
+                        <input type="radio" id="Subject" name="filter" value="Subject">
+                        <label for="Subject">Subject</label><br>
+                        <input type="radio" id="female" name="filter" value="Level">
+                        <label for="female">Level</label><br>
+                        <input type="radio" id="Group" name="filter" value="Group">
+                        <label for="Group">Group</label><br>
+                        <input type="radio" id="Subject & Group" name="filter" value="Subject & Group">
+                        <label for="Subject & Group">Subject & Group</label><br>
+                        <input type="radio" id="Subject & Level" name="filter" value="Subject & Level">
+                        <label for="Subject & Level">Subject & Level</label><br>
+                        <input type="radio" id="Group & Level" name="filter" value="Group & Level">
+                        <label for="Group & Level">Group & Level</label><br>
+                        <input type="radio" id="other" name="filter" value="Subject & Group & Level">
+                        <label for="Subject & Group & Level">Subject & Group & Level</label>
                     </div>
-
                     <div class="pt-2 float-right">
                         <button type="button" onclick="cancelBtn()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button onclick="filterAllCatalog()" id="generateLink" class="btn btn-primary">Generate</button>
                         <!-- <button type="submit" id="edit-partner" class="btn btn-primary" onclick="updatePartnerinfo()">Update</button> -->
                     </div>
                 </div>
@@ -245,7 +251,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="modal fade" id="Editpartnerinfo5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
@@ -262,10 +267,12 @@
                         <div class="">
                             <label>Enter PartnerID</label><span class="text-danger"> *</span>
                             <input type="number" id="partnerid" class="form-control" placeholder="Enter PartnerID" required>
+                            <span class="partnerError d-none">PartnerID cannot be less than 6 characters</span>
                         </div>
                         <div class="pt-3">
                             <label>Enter Access token</label><span class="text-danger"> *</span>
                             <input type="text" id="accesstkn" class="form-control" placeholder="Enter partner access token" required>
+                            <span class="accessError d-none">Access token cannot be less than 28 characters</span>
                         </div>
                         <div class="pt-3">
                             <label>Enter UserPassport</label><span class="text-danger"> *</span>
@@ -274,12 +281,12 @@
                         </div>
                         <div class="pt-3 expirydiv">
                             <label>Enter Expiry Date (Optional)</label>
-                            <input type="date" id="expiry-date" class="form-control expires" placeholder="DD-MM-YYYY" required>
+                            <input type="text" id="expiry-date" class="form-control expires" placeholder="DD-MM-YYYY" required>
                         </div>
                         <div class="pt-5 float-right">
                             <button type="button" onclick="cancelBtn2()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            <button type="button" onclick="next()" id="generate" class="btn btn-primary generate">Generate</button>
-                            <button type="button" onclick="next2()" id="generate2" class="btn btn-primary d-none generatebtn2">Generate</button>
+                            <button type="button" onclick="generateUrlLink()" id="generate" class="btn btn-primary generate">Generate</button>
+                            <button type="button" onclick="generateUrLink2()" id="generate2" class="btn btn-primary d-none generatebtn2">Generate</button>
                         </div>
                     </form>
                 </div>
@@ -336,41 +343,73 @@
 
         </div>
     </div>
-
-    <div class="modal fade" id="Editpartnerinfo9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+    <div class="modal fade" id="Editpartnerinfo8" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title9 create-modal-title">Enter one or more Categories to continue</h5>
+                    <h5 class="modal-title8 create-modal-title">Select an action</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div>
-                        <label>Enter Group</label>
-                        <input type="text" id="group" class="form-control" placeholder="Enter Group">
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="subject()">Subject</button>
                     </div>
-                    <div class="pt-3">
-                        <label>Enter Level</label>
-                        <input type="text" id="level" class="form-control" placeholder="Enter Level">
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="group()">Group</button>
                     </div>
-                    <div class="pt-3">
-                        <label>Enter Subject</label>
-                        <input type="text" id="subject" class="form-control" placeholder="Enter Subject">
+                    <div class="pb-3">
+                        <button class="btn btn-outline-success" onclick="level()">Level</button>
                     </div>
-                    <div class="pt-2 float-right">
-                        <button type="button" onclick="cancelBtn()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button type="button" onclick="filterAllCatalog()" id="generate" class="btn btn-primary generate">Generate</button>
+                    <div class="pt-5 float-right">
+                        <button type="button" id="cancelBtn" class="btn btn-danger"  onclick="cancelBtn()">Cancel</button>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+    <div class="modal fade" id="Editpartnerinfo9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title9 create-modal-title">Select one or more Categories to continue</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label for="">Select any Group</label><br>
+                        <select id="group" class="form-control">
+                        </select>
+                    </div>
+                    <div class="pt-3">
+                        <label for="">Select any level</label><br>
+                        <select id="level" class="form-control">
+                        </select>
+                    </div>
+                    <div class="pt-3">
+                        <label>Select any Subject</label><br>
+                        <select id="subject" class="form-control">
+                        </select>
+                    </div>
+                    <div class="text-wrap pt-3">
+                        <p class="test"></p>
+                        <a target="blank" class="games text-wrap"></a>
+                    </div>
 
+                    <div class="pt-2 float-right">
+                        <button type="button" onclick="cancelBtn()" id="cancelBtn" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="button" id="generatemultilinks" class="btn btn-primary generate">Generate</button>
+                    </div>
+                    <p class="link"></p>
+                </div>
+            </div>
 
-
+        </div>
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -387,6 +426,9 @@
     <script>
         $(document).ready(function() {
             getAllPartners();
+            getGroups();
+            getLevels();
+            getSubjects();
             $('#games').select2({
                 dropdownParent: $('#myModal')
             });
@@ -403,7 +445,6 @@
                 });
                 const data = await response.json();
                 let result = data.data;
-                console.log(result);
                 let databody = "";
                 // load table row into table
                 for (const partner of result) {
@@ -417,6 +458,65 @@
                 $('#dataTable > tbody').append(databody);
                 $('#dataTable').DataTable();
                 return result;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        async function getGroups() {
+            try {
+                const response = await fetch('api.php/GetGroup', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                let groups = data.data;
+                let gameGroups = groups.map((group) => {
+                    const groupOptions = `<option value="${group.groupName}">${group.groupName}</option>`
+                    return groupOptions
+                }).join()
+                $('#group').append(gameGroups)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        async function getLevels() {
+            try {
+                const response = await fetch('api.php/GetLevel', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                let groups = data.data;
+                let gameGroups = groups.map((group) => {
+                    const groupOptions = `<option value="${group.levelName}">${group.levelName}</option>`
+                    return groupOptions
+                }).join()
+
+                $('#level').append(gameGroups)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        async function getSubjects() {
+            try {
+                const response = await fetch('api.php/GetSubject', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                let groups = data.data;
+                let gameGroups = groups.map((group) => {
+                    const groupOptions = `<option value="${group.subjectName}">${group.subjectName}</option>`
+                    return groupOptions
+                }).join()
+                $('#subject').append(gameGroups)
+
             } catch (error) {
                 console.log(error);
             }
@@ -439,7 +539,7 @@
         let url = `https://partners.9ijakids.com/index.php?partnerId=`,
             urlbody = `&accessToken=`;
 
-        //generate url for Partner
+        //generate url for viewing partner's catalog
         function viewCatalog() {
             let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
                 partnerid = storedItem[0],
@@ -453,89 +553,72 @@
             $('#endpoint-link').append(fullUrl);
             link();
         }
-
+        //function to cancel first modal involving view catalog, filter catalog, view list of subjects
         function cancelBtn() {
             $("#endpoint-link").attr("href", '')
             $('#endpoint-link').empty().append();
             $(".modal-title2").empty().append();
             $("#Editpartnerinfo").modal().show();
         }
-
+        //function to cancel first modal involving subscribe, unsubscribe, and play game
         function cancelBtn2() {
             $("#endpoint-link2").attr("href", '')
             $('#endpoint-link2').empty().append();
             $(".modal-title2").empty().append();
             $("#Editpartnerinfo4").modal().show();
         }
-
+        //function to hide select end point to continue
         function filterCatalog() {
             $("#Editpartnerinfo9").modal().show();
             $("#Editpartnerinfo").modal().hide();
+            
+        }
+        //to check expiry
+        function checkExpiry() {
+            if ($('#partnerid').length < 6) {
+                $('.partnerError').addClass('d-none')
+            }
         }
 
-        function filterAllCatalog() {
+        function generateLinks(group = '', level = '', subject = '') {
+            $(".games").removeAttr("href");
             let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
                 partnerid = storedItem[0],
-                accessToken = storedItem[1],
-                group = $('#group').val(),
-                level = $('#level').val(),
-                res = level.split(" "),
-                result = res.join("%20"),
-                urlEnd = `&action=catalogfilter`,
-                subject = $('#subject').val(),
-                groupUrl = `&Group`,
-                levelUrl = `&level`,
-                subjectUrl = `&Subject`;
-            if (group) {
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, groupUrl, group);
-            } else if (level) {
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, levelUrl, result);
-            } else if (subject) {
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, subjectUrl, subject);
-            } else if (group && level) {
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, groupUrl, group, levelUrl, result)
-            } else if (group && subject) {
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, groupUrl, group, subjectUrl, subject)
-            } else if (level && subject) {
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, levelUrl, result, subjectUrl, subject)
-            } else if (group && level && subject) {
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd, groupUrl, group, levelUrl, result, subjectUrl, subject)
-            } else {
-                urlEnd = `&action=catalogfilter`;
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd)
+                accessToken = storedItem[1];
+            let gameVal = document.querySelector('.games');
+            let parameter = `?partnerId=${partnerid}&accessToken=${accessToken}&action=catalogfilter`;
+            let url = 'https://partners.9ijakids.com/index.php';
+
+
+            let groupUrl = group != '' ? `&Group=${group.split(' ').join('%20')}` : ''
+            let levelUrl = level != '' ? `&Level=${level.split(' ').join('%20')}` : ''
+            let subjectUrl = subject != '' ? `&Subject=${subject.split(' ').join('%20')}` : '';
+            gameVal.innerHTML = ''
+            gameVal.innerHTML = `${url}${parameter}${groupUrl}${levelUrl}${subjectUrl}`;
+            let fulLink = `${url}${parameter}${groupUrl}${levelUrl}${subjectUrl}`;
+
+            $(".games").attr("href", fulLink);
+        }
+        const buttonGenerate = document.getElementById("generatemultilinks"),
+            groupVal = document.getElementById("group"),
+            levelVal = document.getElementById("level"),
+            subjectVal = document.getElementById("subject");
+        buttonGenerate.addEventListener('click', () => {
+            generateLinks(groupVal.value, levelVal.value, subjectVal.value)
+        })
+
+        function checkAccessToken() {
+            if ($('#partnerid').length < 28) {
+                $('.accessError').addClass('d-none')
             }
-            $("#endpoint-link").attr("href", fullUrl)
-            $('#endpoint-link').append(fullUrl);
-            $('#Editpartnerinfo9').hide();
-            link()
+        }
+        //function to view list of all subjects
+        function viewList() {
+            $("#Editpartnerinfo").modal().hide();
+            $("#Editpartnerinfo8").modal().show();
         }
 
         function subject() {
-            $("#Editpartnerinfo3").modal().hide();
-            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
-                partnerid = storedItem[0],
-                accessToken = storedItem[1],
-                urlEnd = `&action=group`,
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
-            $("#endpoint-link").attr("href", fullUrl)
-            $('#endpoint-link').append(fullUrl);
-            link()
-        }
-
-        function Level() {
-            $("#Editpartnerinfo3").modal().hide();
-            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
-                partnerid = storedItem[0],
-                accessToken = storedItem[1],
-                urlEnd = `&action=level`,
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
-            $("#endpoint-link").attr("href", fullUrl)
-            $('#endpoint-link').append(fullUrl);
-            link()
-        }
-
-        function group() {
-            $("#Editpartnerinfo3").modal().hide();
             let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
                 partnerid = storedItem[0],
                 accessToken = storedItem[1],
@@ -543,15 +626,38 @@
                 fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
             $("#endpoint-link").attr("href", fullUrl)
             $('#endpoint-link').append(fullUrl);
+            $("#Editpartnerinfo8").modal().hide();
             link()
         }
-
+        function group(){
+            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                partnerid = storedItem[0],
+                accessToken = storedItem[1],
+                urlEnd = `&action=group`,
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
+            $("#endpoint-link").attr("href", fullUrl)
+            $('#endpoint-link').append(fullUrl);
+            $("#Editpartnerinfo8").modal().hide();
+            link()
+        }
+        function level(){
+            let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+                partnerid = storedItem[0],
+                accessToken = storedItem[1],
+                urlEnd = `&action=level`,
+                fullUrl = url.concat(partnerid, urlbody, accessToken, urlEnd);
+            $("#endpoint-link").attr("href", fullUrl)
+            $('#endpoint-link').append(fullUrl);
+            $("#Editpartnerinfo8").modal().hide();
+            link()
+        }
+        //function to check if userpassport field is empty
         function inputCheck() {
             if ($('#userpassport').val() == "") {
                 $('.userpassport-error').removeClass("d-none")
             } else {}
         }
-
+        //function to subscribe a new user
         function subscribeUser() {
             $(".generatebtn2").addClass('d-none')
             $(".generate").removeClass('d-none')
@@ -559,6 +665,7 @@
             $("#Editpartnerinfo4").modal().hide();
             $("#Editpartnerinfo5").modal().show();
         }
+
         // function to get expiry date entered
         function date() {
             var date = new Date($('#expiry-date').val());
@@ -567,61 +674,56 @@
             var year = date.getFullYear();
             expires = [day, month, year].join('-')
         }
-
-        function next() {
-            // let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
+        //function to generate url to subscribe a user 
+        function generateUrlLink() {
+            checkExpiry();
+            checkAccessToken();
             let partnerid = $('#partnerid').val(),
                 accessToken = $('#accesstkn').val(),
                 UserPassport = $('#userpassport').val(),
                 expiryDateEntered = date(),
-                urlEnd = `&action=subscribe`,
-                urlpass = `&userPassport=`,
-                urldate = `&expiryDate=`;
+                urlEnd = ` & action = subscribe `,
+                urlpass = ` & userPassport = `,
+                urldate = ` & expiryDate = `;
             $("#Editpartnerinfo5").modal().hide();
-            if (expiryDateEntered = "") {
+            if (expiryDateEntered != "") {
                 let fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urldate, expiryDateEntered, urlEnd);
             } else {
                 let fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urlEnd);
-
             }
-            $("#endpoint-link2").attr("href", fullUrl);
-            $('#endpoint-link2').append(fullUrl);
             console.log(fullUrl);
             $("#Editpartnerinfo6").modal().show();
+            $("#endpoint-link2").attr("href", fullUrl);
+            $('#endpoint-link2').append(fullUrl);
         }
-
-        function next2() {
+        //function to generate url to unsubscribe a user 
+        function generateUrLink2() {
             $("#Editpartnerinfo5").modal().hide();
-            //let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
             partnerid = $('#partnerid').val(),
                 accessToken = $('#accesstkn').val(),
                 UserPassport = $('#userpassport').val(),
-                urlEnd = `&action=unsubscribe`,
-                urlpass = `&userPassport=`,
+                urlEnd = ` & action = unsubscribe `,
+                urlpass = ` & userPassport = `,
                 fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urlEnd);
             $("#endpoint-link2").attr("href", fullUrl);
             $('#endpoint-link2').append(fullUrl);
             console.log(fullUrl);
             $("#Editpartnerinfo6").modal().show();
         }
-
+        //function to hide expiry div for unsubscribing a user
         function unsubscribeUser() {
-            $(".generatebtn2").addClass('d-none')
+            $(".generatebtn2").removeClass('d-none')
             $(".generate").addClass('d-none')
             $(".expirydiv").hide();
             $("#Editpartnerinfo4").modal().hide();
             $("#Editpartnerinfo5").modal().show();
         }
-
+        //function to hide select an action div
         function playGame() {
             $("#Editpartnerinfo4").modal().hide();
             $("#Editpartnerinfo7").modal().show();
         }
-
-        function subjectGroup() {
-
-        }
-
+        //function to generate url to play game 
         function generateGameID() {
             if ($('#userpassport2').val() == "" && $('#gameid').val() == "") {
                 $('.error-class').removeClass("d-none")
@@ -629,29 +731,23 @@
             } else {
                 $("#Editpartnerinfo7").modal().hide();
                 let storedItem = JSON.parse(sessionStorage.getItem('partnerinfo')),
-                    url = `https://partners.9ijakids.com/index.php/play?partnerId=`,
+                    url = `
+                https: //partners.9ijakids.com/index.php/play?partnerId=`,
                     partnerid = storedItem[0],
                     UserPassport = $('#userpassport2').val(),
-                    // and = `&`,
                     urlpass = `&userPassport=`,
                     accessToken = storedItem[1],
                     urlEnd = `&action=play&`,
                     urlend2 = ` gameID=`,
-                    gameId = $('#gameid').val()
-                fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urlEnd, urlend2, gameId);
+                    gameId = $('#gameid').val(),
+                    fullUrl = url.concat(partnerid, urlbody, accessToken, urlpass, UserPassport, urlEnd, urlend2, gameId);
                 $("#endpoint-link2").attr("href", fullUrl);
                 $('#endpoint-link2').append(fullUrl);
                 console.log(fullUrl);
                 $("#Editpartnerinfo6").modal().show();
             }
         }
-        // $('body').removeClass('modal-open');
-        // $('.modal-backdrop').remove();
     </script>
 </body>
-
-</html>
-
-</html>
 
 </html>
