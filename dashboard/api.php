@@ -121,10 +121,34 @@ try {
         } else 
             respond(404, array('success' => false, 'error' => 'Subscription not found'));
     }
+        // For the GamesID and Game Name
+        else if (stripos($_SERVER['REQUEST_URI'], '/GetGames') !== false) {
+            $db = getDb();
+            $sql = "SELECT acc.SubscriptionID, acc.GameID, gm.GameTitle FROM partnerdb.AccessLog acc LEFT JOIN partnerdb.Game gm on gm.GameID  = acc.GameID;";
+            $query = mysqli_query($db, $sql);
+            $SubscriptionDate = [];
+    
+            if (mysqli_num_rows($query) > 0) {
+                $pid = [];
+                $getSubscriptionDate = [];
+                while ($row = mysqli_fetch_assoc($query)) {
+                    $pid[] = $row['PartnerID'];
+                    $getSubscriptionDate[$row['PartnerID']][] = $row;
+                }
+    
+                $pid = array_unique($pid);
+                $SubscriptionDate = [];
+                foreach ($pid as $key => $id) {
+                    $SubscriptionDate[] = $getSubscriptionDate[$id];
+                }
+                respond(200, array('success' => true, 'data' => $SubscriptionDate));
+            } else 
+                respond(404, array('success' => false, 'error' => 'Subscription not found'));
+        }
     // For the UserPassport and User Created Date
     else if (stripos($_SERVER['REQUEST_URI'], '/GetUserPassport') !== false) {
         $db = getDb();
-        $sql = "SELECT UserPassport, DATE_FORMAT(CreatedDate, '%Y-%m-%d') DateCreated FROM partnerdb.Subscription;";
+        $sql = "SELECT UserPassport, SubscriptionID, DATE_FORMAT(CreatedDate, '%Y-%m-%d') DateCreated FROM partnerdb.Subscription";
         $query = mysqli_query($db, $sql);
         $SubscriptionDate = [];
 

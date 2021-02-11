@@ -99,14 +99,14 @@
                 <form>
                     <legend>Select Partner</legend>
                     <div class="mb-3">
-                        <select id="partnerList" class="form-select form-control">
-                            <option>Partners</option>
+                        <select id="partnerList" onchange="getPartnerDetails()" class="form-select form-control">
+                            <option disabled>Partners</option>
                         </select>
                     </div>
                 </form>
             </div>
 
-            <div class="summary-box">
+            <!-- <div class="summary-box">
                 <h3 class="page-header"><i class="fas fa-chart-line"></i> Summary</h3>
                 <div class="box-1">
                     <p id="total-users" class="box-1-no"></p>
@@ -114,8 +114,8 @@
                 </div>
             </div>
 
-            <div class="line"></div>
-
+            <div class="line"></div> -->
+<!-- 
             <div class="summary-box-1">
                 <h3 class="page-header">New Subscriptions</h3>
                 <div class="general-box">
@@ -152,7 +152,7 @@
                         <p class="box-2-det">This month</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
                 <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -164,12 +164,11 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
+                                    <th>S/N</th>
                                     <th>User</th>
-                                    <th>PartnerID</th>
                                     <th>New/Existing</th>
-                                    <th>Date & Time</th>
-                                    <th>No of Games</th>
-                                    <th>Games</th>
+                                    <th>Date Created</th>
+                                    <th>No of Games Played</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -194,9 +193,6 @@
             <!-- <div class="line"></div> -->
         </div>
     </div>
-
-    <!-- JavaScript for CSV Download -->
-    <script src="./js/csv1.js"></script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -249,6 +245,14 @@
 
         getAllPartners();
 
+        // Get Partner Details Function
+        function getPartnerDetails() {
+            const listOfPartners = document.getElementById("partnerList").value;
+            console.log(listOfPartners);
+        }
+
+        getPartnerDetails();
+
         //   Function to Populate the Summary Boxes
         async function getUsersOfPartners() {
             try { 
@@ -261,35 +265,67 @@
                 const data = await response.json();
                 let result = data.data;
 
-                console.log(result)
+                const res = await fetch('api.php/GetGames', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const getData = await res.json();
+                let show = getData.data;
+
+                function getGames(SubscriptionID, show) {
+                    result = show.filter(x => x.SubscriptionID == SubscriptionID)
+                    return result.length;
+                }
 
                 let databody = "";
 
+                count = 0;
+
                 for(users of result[0]) {
-                    // const num2 = show[index];
-                    // console.log(num1)
+                    count++;
+                    // Get New or Existing User
+                    var date = new Date();
+                    var firstMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+                    var lastMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+                    // Converting to ISO Date Format in JavaScript in order to match the format in the database
+                    getFirstDay = firstMonth.toISOString().substr(0,10);
+                    getLastDay = lastMonth.toISOString().substr(0,10);
+
+                    function checkUser() {
+                        if (`${users.DateCreated}` >= getFirstDay && `${users.DateCreated}` <= getLastDay) {
+                            yes = 'New';
+                            return yes;
+                        } else {
+                            no = 'Existing';
+                            return no;
+                        }
+                    }
 
                     // Table Body Details
                     const partnerInfo = `<tr>
-                    <td>${users.UserPassport}</td>    
-                    <td></td>
+                    <td>${count}</td>    
+                    <td>${users.UserPassport}</td>
+                    <td>${checkUser()}</td>
                     <td>${users.DateCreated}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>${getGames(users.SubscriptionID, show[0])}</td>
                     <td><button class="btn btn-primary btn-edit" data-toggle="modal" data-target="#Editpartnerinfo" onclick="Edit('${users.UserPassport}')">Edit</button></td>
                     <td><button class="btn btn-danger" id="cancel" onclick="deletePartner(${users.PartnerID})">Delete</button></td>
                     </tr>`
 
                     databody += partnerInfo;
                 }
-                $('#dataTable > tbody').append(databody);
-            } catch (error) {
-                console.log(error);
+                    $('#dataTable > tbody').append(databody);
+                    $('#dataTable').DataTable();
+                    return result;
+                } catch (error) {
+                    console.log(error);
+                }
             }
-        }
 
-        getUsersOfPartners();
+            getUsersOfPartners();
     </script>
 </body>
 
